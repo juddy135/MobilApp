@@ -44,6 +44,8 @@
             android:layout_width="280dp"
             android:layout_height="280dp"
             android:layout_weight="5"
+            android:layout_gravity="center"
+            android:gravity="center"
             >
 
             <ImageView
@@ -59,14 +61,12 @@
                 style="@style/matchwrap.input.title"
                 android:layout_width="280dp"
                 android:layout_height="60dp"
-                android:layout_alignParentStart="true"
-                android:layout_marginBottom="@dimen/common_margin_bigger"
-                android:layout_marginStart="@dimen/common_margin_huge4"
-                android:layout_marginTop="@dimen/common_margin_huge"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
                 android:background="@drawable/paralel_back_fidelizacion_2"
                 android:gravity="center"
-                android:textSize="@dimen/common_textsize_biggest"
-                />
+                android:textSize="@dimen/common_textsize_biggest" />
 
             <TextView
                 android:id="@+id/act_user_txt_billetero_redeemed"

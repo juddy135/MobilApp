@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/wrapwrap"
+    android:layout_width="@dimen/dialog_width"
+    android:background="@drawable/shape_background_dialog"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/dialog_frag_confirm_txt_title"
+        style="@style/matchwrap.input.title"
+        android:layout_width="@dimen/dialog_width"
+        android:layout_margin="@dimen/common_margin_medium"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/common_textsize_big"
+        />
+
+    <TextView
+        android:id="@+id/dialog_frag_confirm_txt_msg"
+        style="@style/matchwrap"
+        android:layout_width="@dimen/dialog_width"
+        android:layout_margin="@dimen/common_margin_big"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/common_textsize_big"
+        />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/holo_blue_light"
+        />
+
+    <Button
+        android:id="@+id/dialog_frag_confirm_btn_accept"
+        android:gravity="center"
+        android:layout_gravity="center"
+        style="@style/wrapwrap"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:padding="@dimen/common_padding_medium"
+        android:text="@string/common_accept"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/common_textsize_big"
+        />
+
+</LinearLayout>

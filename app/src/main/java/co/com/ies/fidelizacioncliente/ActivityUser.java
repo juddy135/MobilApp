@@ -211,6 +211,9 @@ public class ActivityUser extends ActivityBase implements
                 imgCallService.setVisibility(View.VISIBLE);
             }
             imgBar.setVisibility(GONE);
+            /*if(taskPoints==null){
+                startAskingPoints();
+            }*/
         }else if(resultCode == AppConstants.RESULT_ACTIVITY_CLOSE_OK){
             currentAction = 0;
             ALLOW_VIDEO = false;

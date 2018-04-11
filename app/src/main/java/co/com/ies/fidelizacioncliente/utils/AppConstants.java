@@ -208,6 +208,7 @@ public class AppConstants {
         public final static String FIDEL_ERROR = "43";
         public final static String CLOSE_ERROR = "44";
         public final static String CLAVE_VENCIDA = "75";
+        public final static String MAQUINA_BLOQUEADA = "78";
     }
 
     /**
