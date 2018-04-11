@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="max_length_doc">30</integer>
+    <integer name="max_length_clave_dinamica">4</integer>
+</resources>

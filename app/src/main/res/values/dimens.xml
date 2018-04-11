@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <dimen name="common_padding_small">6dp</dimen>
+    <dimen name="common_padding_medium">10dp</dimen>
+    <dimen name="common_padding_big">14dp</dimen>
+    <dimen name="common_padding_bigger">20dp</dimen>
+
+
+    <dimen name="common_textsize_small">16sp</dimen>
+    <dimen name="common_textsize_medium">18sp</dimen>
+    <dimen name="common_textsize_big">22sp</dimen>
+    <dimen name="common_textsize_bigger">24sp</dimen>
+    <dimen name="common_textsize_biggest">26sp</dimen>
+    <dimen name="common_textsize_big_as_fuck">40sp</dimen>
+
+    <dimen name="common_margin_small">3dp</dimen>
+    <dimen name="common_margin_medium">5dp</dimen>
+    <dimen name="common_margin_big">8dp</dimen>
+    <dimen name="common_margin_bigger">12dp</dimen>
+    <dimen name="common_margin_huge">20dp</dimen>
+    <dimen name="common_margin_huge2">30dp</dimen>
+    <dimen name="common_margin_huge3">40dp</dimen>
+    <dimen name="common_margin_huge4">50dp</dimen>
+
+    <dimen name="common_divider_high">2dp</dimen>
+
+    <dimen name="common_small_custom_height">20dp</dimen>
+    <dimen name="common_custom_height">30dp</dimen>
+    <dimen name="common_custom_width">200dp</dimen>
+    <dimen name="common_custom_width_small">60dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">14dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="big_square_side">80dp</dimen>
+    <dimen name="big_circle_diameter">75dp</dimen>
+    <dimen name="regular_circle_diameter">65dp</dimen>
+    <dimen name="medium_circle_diameter">50dp</dimen>
+    <dimen name="small_circle_diameter">40dp</dimen>
+    <dimen name="medium_square_side">42dp</dimen>
+    <dimen name="small_square_side">30dp</dimen>
+    <dimen name="biggest_circle_diameter">108dp</dimen>
+    <dimen name="bigger_circle_diameter">100dp</dimen>
+    <dimen name="width_field_doc">300dp</dimen>
+    <dimen name="circle_size">260dp</dimen>
+    <dimen name="circle_size_points_1">140dp</dimen>
+    <dimen name="circle_size_points_2">120dp</dimen>
+    <dimen name="circle2_size_points_1">120dp</dimen>
+    <dimen name="circle2_size_points_2">100dp</dimen>
+    <dimen name="circle3_size_points_1">100dp</dimen>
+    <dimen name="circle3_size_points_2">80dp</dimen>
+    <dimen name="circle4_size_points_1">220dp</dimen>
+    <dimen name="circle4_size_points_2">200dp</dimen>
+
+
+
+    <dimen name="width_points">150dp</dimen>
+    <dimen name="side_btn_pad_num">46dp</dimen>
+
+    <dimen name="width_circle">160dp</dimen>
+    <dimen name="width_circle_2">140dp</dimen>
+    <dimen name="width_circle_3">100dp</dimen>
+    <dimen name="width_circle_4">240dp</dimen>
+
+    <dimen name="width_circle_points">160dp</dimen>
+    <dimen name="size_txt_points">30sp</dimen>
+    <dimen name="size_txt_points2">20sp</dimen>
+
+
+    <dimen name="dialog_width">300dp</dimen>
+
+    <dimen name="height_row">130dp</dimen>
+    <dimen name="card_corner">5dp</dimen>
+
+    <dimen name="dialog_clave_width">400dp</dimen>
+
+</resources>

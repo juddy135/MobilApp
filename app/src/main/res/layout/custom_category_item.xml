@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/matchwrap.margin"
+    android:layout_gravity="center"
+    android:clickable="true"
+    android:focusable="true"
+    android:elevation="4dp"
+    android:background="@drawable/style_rectangle"
+    app:cardCornerRadius="@dimen/common_margin_big">
+
+    <TextView
+        android:id="@+id/ctm_category_tv"
+        style="@style/matchmatch"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:padding="@dimen/common_padding_medium"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/common_textsize_biggest" />
+
+</android.support.v7.widget.CardView>

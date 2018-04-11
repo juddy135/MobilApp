@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingStart="@dimen/common_padding_big"
+    android:paddingEnd="@dimen/common_padding_big">
+
+    <ImageView
+        android:id="@+id/ctm_item_bar_img_thumbnail"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/common_margin_small"
+        android:layout_weight="2" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/common_margin_medium"
+        android:layout_marginStart="@dimen/common_margin_huge"
+        android:layout_weight="4"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ctm_item_bar_txt_name"
+            style="@style/wrapwrap.input"
+            android:layout_margin="@dimen/common_margin_small"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/common_textsize_biggest"
+            tools:text="LOOOOOOOOOONNNNG NAME"/>
+
+        <TextView
+            android:id="@+id/ctm_item_bar_txt_price"
+            style="@style/wrapwrap.input"
+            android:layout_margin="@dimen/common_margin_small"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/common_textsize_big"
+            tools:text="Price: $100000"/>
+
+        <TextView
+            android:id="@+id/ctm_item_bar_txt_points"
+            style="@style/wrapwrap.input"
+            android:layout_margin="@dimen/common_margin_small"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/common_textsize_big"
+            tools:text ="Points: 100000"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ctm_item_bar_lyt_buy"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_row"
+        android:layout_gravity="center"
+        android:padding="@dimen/common_margin_big"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/ctm_item_bar_btn_buy"
+            android:layout_width="@dimen/height_row"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/common_margin_small"
+            android:layout_weight="1"
+            android:background="@drawable/selector_button_style"
+            android:padding="@dimen/common_padding_small"
+            android:text="@string/list_buy"
+            android:textColor="@color/text_dark_blue"
+            android:textSize="@dimen/common_textsize_medium"
+            android:focusable="false"
+            />
+
+        <Button
+            android:id="@+id/ctm_item_bar_btn_redeem"
+            android:layout_width="@dimen/height_row"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/common_margin_small"
+            android:layout_weight="1"
+            android:background="@drawable/selector_button_style"
+            android:padding="@dimen/common_padding_small"
+            android:text="@string/list_redeem"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/common_textsize_medium"
+            android:focusable="false"
+            />
+
+        <Button
+            android:id="@+id/ctm_item_bar_btn_cancel"
+            android:layout_width="@dimen/height_row"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/common_margin_small"
+            android:layout_weight="1"
+            android:background="@drawable/selector_button_style"
+            android:padding="@dimen/common_padding_small"
+            android:text="@string/list_cancel"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/common_textsize_medium"
+            android:visibility="gone"
+            android:focusable="false"
+            />
+
+        <Button
+            android:id="@+id/ctm_item_bar_btn_received"
+            android:layout_width="@dimen/height_row"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/common_margin_small"
+            android:layout_weight="1"
+            android:background="@drawable/selector_button_style"
+            android:padding="@dimen/common_padding_small"
+            android:text="@string/list_received"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/common_textsize_medium"
+            android:visibility="gone"
+            android:focusable="false"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginEnd="@dimen/common_margin_big"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center"
+        >
+        <ImageView
+            android:id="@+id/ctm_item_bar_img_orderstate"
+            style="@style/wrapwrap.margin"
+            android:background="@drawable/ic_on_hold_46dp" />
+        <TextView
+            android:id="@+id/ctm_item_bar_txt_orderstate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_textsize_small"
+            android:text="@string/common_on_hold"
+            android:textColor="@android:color/white"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    android:orientation="vertical"
+    tools:context=".ActivitySetting">
+
+    <RelativeLayout style="@style/matchwrap.margin">
+
+        <TextView
+            android:id="@+id/act_setting_title"
+            style="@style/matchwrap.biginput.title"
+            android:layout_width="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/act_setting_title"
+            android:textColor="@android:color/white" />
+
+
+        <ImageButton
+            android:id="@+id/act_setting_btn_sync"
+            style="@style/wrapwrap.marginbiggerET"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="end"
+            android:background="@drawable/selector_button_circle_medium"
+            android:onClick="onClicSync"
+            android:src="@drawable/ic_sync_black_36dp" />
+
+        <ImageButton
+            android:id="@+id/act_setting_btn_clear_all"
+            style="@style/wrapwrap.marginbiggerET"
+            android:background="@drawable/selector_button_circle_medium"
+            android:onClick="onClicDeleteAll"
+            android:src="@drawable/ic_delete_forever_black_36dp"
+            android:layout_toStartOf="@+id/act_setting_btn_sync" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/act_setting_divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="@dimen/common_margin_bigger"
+        android:background="@android:color/holo_blue_light" />
+
+
+    <LinearLayout
+        android:baselineAligned="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                style="@style/matchmatch.margin"
+                android:layout_marginBottom="@dimen/common_margin_medium"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/matchwrap.biginput.title"
+                    android:text="@string/act_setting_txt_ip" />
+
+                <EditText
+                    android:id="@+id/act_setting_edt_ip"
+                    style="@style/matchwrap.biginput"
+                    android:background="@drawable/shape_custom_edittext_gnr"
+                    android:hint="@string/act_setting_edt_ip_hint" />
+
+                <TextView
+                    style="@style/matchwrap.biginput.title"
+                    android:text="@string/act_setting_txt_serv_usr" />
+
+                <EditText
+                    android:id="@+id/act_setting_edt_serv_usr"
+                    style="@style/matchwrap.biginput"
+                    android:background="@drawable/shape_custom_edittext_gnr"
+                    android:hint="@string/act_setting_edt_usr_hint" />
+
+                <TextView
+                    style="@style/matchwrap.biginput.title"
+                    android:text="@string/act_setting_txt_serv_pass" />
+
+                <EditText
+                    android:id="@+id/act_setting_edt_serv_pass"
+                    style="@style/matchwrap.biginput"
+                    android:background="@drawable/shape_custom_edittext_gnr"
+                    android:hint="@string/act_setting_edt_pass_hint"
+                    android:inputType="textPassword"
+                    />
+
+                <!--
+
+                <TextView
+                    style="@style/matchwrap.biginput.title"
+                    android:text="@string/act_setting_txt_interv_points" />
+
+                <EditText
+                    android:id="@+id/act_setting_edt_interv_points"
+                    style="@style/matchwrap.biginput"
+                    android:background="@drawable/shape_custom_edittext_gnr"
+                    android:hint="@string/act_setting_edt_id_hint"
+                    android:inputType="phone" />
+
+                <TextView
+                    style="@style/matchwrap.biginput.title"
+                    android:text="@string/act_setting_txt_pass" />
+
+                <EditText
+                    android:id="@+id/act_setting_edt_pass"
+                    style="@style/matchwrap.biginput"
+                    android:background="@drawable/shape_custom_edittext_gnr"
+                    android:hint="@string/act_setting_edt_pass_hint" /> -->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_custom_height" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                style="@style/matchmatch.margin"
+                android:layout_marginBottom="@dimen/common_margin_medium"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/matchwrap.biginput.title"
+                    android:text="@string/act_setting_txt_uso" />
+
+                <Spinner
+                    android:id="@+id/act_setting_spn_uso"
+                    style="@style/spinner_custom"
+                    android:background="@drawable/shape_custom_edittext_gnr"
+                    android:entries="@array/usos_app"
+                    android:popupBackground="@android:color/white" />
+
+                <TextView
+                    style="@style/matchwrap.biginput.title"
+                    android:text="@string/act_setting_txt_casino" />
+
+                <Spinner
+                    android:id="@+id/act_setting_spn_casino"
+                    style="@style/spinner_custom"
+                    android:background="@drawable/shape_custom_edittext_gnr"
+                    android:popupBackground="@android:color/white" />
+
+                <TextView
+                    style="@style/matchwrap.biginput.title"
+                    android:text="@string/act_setting_txt_id" />
+
+                <Spinner
+                    android:id="@+id/act_setting_spn_id_machine"
+                    style="@style/spinner_custom"
+                    android:background="@drawable/shape_custom_edittext_gnr"
+                    android:popupBackground="@android:color/white" />
+
+
+                <Button
+                    style="@style/wrapwrap.title"
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="@dimen/common_margin_huge"
+                    android:background="@drawable/style_rectangle"
+                    android:onClick="onClicGuardar"
+                    android:padding="@dimen/common_padding_big"
+                    android:text="@string/act_setting_btn_save"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</LinearLayout>

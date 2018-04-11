@@ -1,0 +1,132 @@
+<resources>
+    <string name="app_name">FidelizacionCliente</string>
+
+
+    <string name="common_missing_field">Campo vacío</string>
+    <string name="common_wrong_format">Formato incorrecto</string>
+    <string name="common_missing_selection">Falta seleccionar</string>
+    <string name="common_accept">Aceptar</string>
+    <string name="common_cancel">Cancelar</string>
+    <string name="common_resend">Reenviar</string>
+    <string name="common_si">Sí</string>
+    <string name="common_no">Mejor no</string>
+    <string name="common_on_hold">En espera</string>
+    <string name="common_on_way">En Camino</string>
+    <string name="common_sign_out">Cerrar sesión</string>
+    <string name="common_exit">¿Realmente deseas salir?</string>
+    <string name="common_load_machine">¿Realmente deseas cargar la máquina?</string>
+    <string name="common_load_machine_info"> Recuerda que la máquina debe estar desbloqueada</string>
+    <string name="common_load_machine_ok"> Carga Exitosa</string>
+    <string name="common_input_pass">Ingresa la contraseña</string>
+    <string name="common_wrong_pass">Contraseña equivocada</string>
+    <string name="common_no_clave">Para usar La Billetera es necesario la clave dinámica</string>
+    <string name="common_alert">Aviso</string>
+    <string name="common_fail">Estamos sufriendo fallas, perdona las molestias :D</string>
+    <string name="common_no_internet">No tienes conexión a internet</string>
+    <string name="common_no_config">No se encontró archivo de configuración</string>
+    <string name="common_search">Buscar</string>
+    <string name="common_error_cargar_maquina">La maquina debe estar desbloqueada</string>
+    <string name="common_error_ver_premios">No encontramos tu premio</string>
+    <string name="common_user_no_cashless">No tienes La Billetera activada, comunícate con la administración</string>
+    <string name="mesage_client_blocked">Tu usuario a sido bloqueado, comunícate con la administración para cualquier inquietud</string>
+    <string name="message_client_not_found">No encontramos tu documento, comunícate con el personal del casino y regístrate para acumular puntos y ganas premios! :D</string>
+    <string name="message_clave_vencida"> Su clave expiró, por favor genera una nueva</string>
+    <string name="act_splash_txt">POWERED BY IES</string>
+
+    <string name="act_setting_title">Configuración de fidelización</string>
+    <string name="act_setting_txt_ip">Dirección base</string>
+    <string name="act_setting_txt_id">Identificador de la máquina</string>
+    <string name="act_setting_txt_interv_points">Consulta de points (seg)</string>
+    <string name="act_setting_txt_serv_pass">Password servicio web</string>
+    <string name="act_setting_txt_serv_usr">Usuario servicio web</string>
+    <string name="act_setting_txt_pass">Clave Acceso Config</string>
+    <string name="act_setting_edt_ip_hint">Ejemplo: 127.0.0.1:8443</string>
+    <string name="act_setting_edt_id_hint">Ejemplo: 29</string>
+    <string name="act_setting_edt_pass_hint">Ingrese contraseña</string>
+    <string name="act_setting_edt_usr_hint">Ingrese usuario</string>
+    <string name="act_setting_edt_interv_points">Intervalo de actualización</string>
+    <string name="act_setting_btn_save">Inicia Fidelización</string>
+    <string name="act_setting_txt_uso">Uso</string>
+    <string name="act_setting_txt_casino">Casino</string>
+    <string name="act_setting_download_info">Descargando información</string>
+    <string name="act_setting_select">Selecciona una opción</string>
+    <string name="act_setting_select_casino">Selecciona un casino por favor</string>
+    <string name="act_setting_missing_fields">Hay campos obligatorios sin valor o selección</string>
+    <string name="act_setting_missing_params">No hay parametros guardados, por favor sincronizar</string>
+    <string name="act_setting_delete_done">Eliminación terminada</string>
+    <string-array name="usos_app">
+        <item>Selecciona una opción</item>
+        <item>Fidelización</item>
+        <item>Bar</item>
+        <item>Cashless</item>
+        <item>Fidelización + Bar</item>
+        <item>Fidelización + Bar + Cashless</item>
+    </string-array>
+    <string name="act_setting_input_ip">Agrega los campos necesario para consultar el servicio(direccion, usuario y password del servicio web</string>
+    <string name="act_setting_sync_ok">Sincronización exitosa</string>
+    <string name="act_setting_no_permission_ext_storage">No se autorizó guardado de log </string>
+    <string name="act_setting_no_permission_ext_storage_config">No se autorizó la carga de configuración desde archivo</string>
+    <string name="act_setting_delete_all">¿Desea eliminar los datos guardados, las imágenes y el registro de errores?</string>
+
+    <string name="act_login_enter">Entrar</string>
+    <string name="act_login_edt_doc_hint">Tu documento</string>
+    <string name="act_login_required">Se debe agregar un documento</string>
+    <string name="act_login_validate_user">Validando jugador</string>
+    <string name="act_login_welcome">%1$s bienvenido a %2$s!!</string>
+    <string name="act_login_hint_doc">Digita tu cédula</string>
+    <string name="act_login_hint_clave">Digita tu clave</string>
+    <string name="act_login_dialog_clave">Clave Dinámica</string>
+    <string name="act_login_error_clave">Clave incorrecta</string>
+    <string name="act_login_resend_clave">Hemos enviado la clave</string>
+    <string name="act_login_resending_clave">Enviando clave</string>
+    <string name="act_login_esperando">Espere por favor</string>
+    <string name="act_login_waiting">Conectando...</string>
+    <string name="act_num_maquina">Máquina</string>
+
+    <string name="act_user_title">Perfil del jugador</string>
+    <string name="act_user_txt_nombre">Nombre:</string>
+    <string name="act_user_cant_puntos">Puntos totales:</string>
+    <string name="act_user_cant_puntos2">Puntos totales</string>
+    <string name="act_user_cant_puntos_redimidos">Puntos día:</string>
+    <string name="act_user_cant_puntos_redimidos2">Puntos día</string>
+    <string name="act_user_cant_billetero">Billetero:</string>
+    <string name="act_user_cant_billetero2">Billetero</string>
+    <string name="act_user_no_bar_items">No hay lista de snacks, habla con el administrador</string>
+    <string name="act_user_no_select_snack">No elegiste ningún snack</string>
+    <string name="act_user_cashless_out">Saliste del billetero</string>
+    <string name="act_user_asking_snack">Procesando petición</string>
+    <string name="act_user_close_session">Cerrando sesión</string>
+    <string name="act_user_no_points">Error</string>
+    <string name="act_user_consulting_points">Consultando</string>
+    <string name="act_user_only_bar">De parte de %1$s te deseamos mucha suerte</string>
+    <string name="act_user_session_expired">La sesión a expirado, por favor ingrese de nuevo</string>
+    <string name="act_start_validate_service">Validando servicios activos</string>
+    <string name="act_user_no_bar">No se puede usar el bar en estos momento, inténtelo de nuevo mas tarde</string>
+    <string name="act_user_processing_call_atendant">Procesando llamada de asistencia</string>
+    <string name="act_user_borrar">Borrar</string>
+    <string name="act_descargar_billetero">Descargar Máquina</string>
+    <string name="act_cargar_billetero">Cargar Máquina</string>
+
+    <string name="act_user_call_attendant_waiting">En un momento el personal se acercará a ud</string>
+    <string name="act_user_call_attendant_done">La llamada para asistencia ha sido cancelada o atendida</string>
+
+    <string name="act_bar_list_confirm_title">Pedir snack</string>
+    <string name="act_bar_list_redeem_message">¿Estás seguro de redimir un(a) %1$s?</string>
+    <string name="act_bar_list_buy_message">¿Estás seguro de comprar un(a) %1$s?</string>
+    <string name="act_bar_list_cancel_message">¿Estás seguro de cancelar el pedido de %1$s?</string>
+    <string name="act_bar_list_received_message">¿Estás seguro haber recibido su(s) %1$s?</string>
+    <string name="baritem_name"><b>%1$s</b> </string>
+    <string name="act_bar_consulting">Actualizando el bar...</string>
+    <string name="title_activity_activity_bar_list">Bar</string>
+    <string name="act_bar_fail_request">No se pudo realizar la solicitud, por favor inténtelo mas tarde</string>
+    <string name="act_bar_points">Puntos del bar: %1$s</string>
+    <string name="act_bar_empty">No hay nada para pedir :(</string>
+    <string name="points_param"><b>Puntos: </b>%1$s </string>
+    <string name="price_param"><b>Precio: </b>%1$s %2$s</string>
+    <string name="list_buy">Comprar</string>
+    <string name="list_redeem">Redimir</string>
+    <string name="list_cancel">Cancelar</string>
+    <string name="list_received">Recibido</string>
+
+    <string name="dialog_category">Categorías</string>
+</resources>

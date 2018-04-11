@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/shape_background_dialog"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/common_margin_huge"
+    android:minWidth="@dimen/dialog_clave_width"
+    >
+
+    <TextView
+        android:id="@+id/dialog_frag_clave_txt_title"
+        style="@style/matchwrap.input.title"
+        android:layout_width="@dimen/dialog_width"
+        android:textColor="@android:color/white"
+        android:text="@string/act_login_hint_clave"
+        android:textSize="@dimen/common_textsize_big"
+        android:layout_margin="@dimen/common_margin_big"
+        />
+
+    <EditText
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/dialog_frag_clave_edt"
+        style="@style/matchwrap.biginput"
+        android:layout_width="@dimen/dialog_width"
+        android:layout_margin="@dimen/common_margin_big"
+        android:background="@drawable/shape_custom_edittext_gnr"
+        android:textColor="@android:color/black"
+        android:inputType="number"
+        android:maxLength="@integer/max_length_clave_dinamica"
+        />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/holo_blue_light"
+        />
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/common_margin_medium"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/dialog_frag_clave_btn_resend"
+            android:gravity="center"
+            android:layout_gravity="center"
+            style="@style/wrapwrap"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="@dimen/common_padding_medium"
+            android:text="@string/common_resend"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/common_textsize_medium"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="@android:color/holo_blue_light"
+            />
+
+        <Button
+            android:id="@+id/dialog_frag_clave_btn_cancel"
+            android:gravity="center"
+            android:layout_gravity="center"
+            style="@style/wrapwrap"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="@dimen/common_padding_medium"
+            android:text="@string/common_cancel"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/common_textsize_medium"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="@android:color/holo_blue_light"
+            />
+
+        <Button
+            android:id="@+id/dialog_frag_clave_btn_accept"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            style="@style/wrapwrap"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="@dimen/common_padding_medium"
+            android:text="@string/common_accept"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/common_textsize_medium"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

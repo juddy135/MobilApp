@@ -1,0 +1,67 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '27.0.3'
+
+    defaultConfig {
+        applicationId "co.com.ies.fidelizacioncliente"
+        minSdkVersion 17
+        targetSdkVersion 23
+        versionCode 2
+        versionName "1.1.0"
+    }
+
+
+    signingConfigs {
+        release {
+            storeFile file('../key_fidelizacion.jks')
+            storePassword 'Aqtba_14'
+            keyAlias 'IesMobile'
+            keyPassword 'hj_*76Q/HJ'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    /*productFlavors {
+        Fidelizacion {
+            applicationId project.applicationId
+            versionCode project.versionCode
+            versionName project.versionName
+        }
+    }*/
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:25.4.0'
+    implementation 'com.android.support:support-v4:25.4.0'
+    implementation 'com.android.support:design:25.4.0'
+    implementation 'com.android.volley:volley:1.0.0'
+    implementation 'org.apache.httpcomponents:httpcore:4.3.2'
+    implementation 'com.loopj.android:android-async-http:1.4.9'
+    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+    implementation 'com.android.support:cardview-v7:25.4.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
+}
+
+/*def renameArtifact(variant, defaultConfig) {
+    variant.outputs.each { output ->
+        def fullName = output.outputFile.name
+        def projectName = fullName.substring(0, fullName.indexOf('.'))
+
+        output.outputFile = new File(
+                (String) output.outputFile.parent,
+                (String) fullName.replace(projectName, projectName + ".v${variant.versionName}($variant.versionCode)"))
+    }
+}*/

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/wrapwrap"
+    android:layout_width="@dimen/dialog_width"
+    android:background="@drawable/shape_background_dialog"
+    android:orientation="vertical"
+    android:padding="@dimen/common_padding_medium">
+
+    <EditText
+        android:id="@+id/dialog_frag_search_edt"
+        style="@style/matchwrap.biginput"
+        android:layout_width="@dimen/dialog_width"
+        android:layout_margin="@dimen/common_margin_big"
+        android:background="@drawable/shape_custom_edittext_gnr"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/common_textsize_medium" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/dialog_frag_search_rv_cat"
+        style="@style/matchwrap.margin" />
+
+
+    <LinearLayout
+        style="@style/wrapwrap.margin"
+        android:layout_gravity="end"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/dialog_frag_search_btn_cancel"
+            style="@style/wrapwrap.margin"
+            android:background="@drawable/selector_btn_56dp"
+            android:padding="@dimen/common_padding_medium"
+            android:text="@string/common_cancel"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/common_textsize_medium" />
+
+        <Button
+            android:id="@+id/dialog_frag_search_btn_ok"
+            style="@style/wrapwrap.margin"
+            android:background="@drawable/selector_btn_56dp"
+            android:padding="@dimen/common_padding_medium"
+            android:text="@string/common_search"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/common_textsize_medium" />
+
+    </LinearLayout>
+
+</LinearLayout>

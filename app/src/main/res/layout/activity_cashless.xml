@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="11"
+    android:orientation="vertical"
+    android:background="@drawable/background_gradient"
+    tools:context=".ActivityCashless">
+
+    <!-- Boton de Volver-->
+    <ImageButton
+        android:id="@+id/act_user_btn_back"
+        style="@style/wrapwrap.marginbiggerST"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/selector_square_2"
+        android:onClick="onClickBack"
+        android:src="@drawable/ic_arrow_back_white_36dp" />
+    <!-- Boton de Cerrar Sesion-->
+    <ImageButton
+        android:id="@+id/act_user_btn_logout"
+        style="@style/wrapwrap.marginbiggerET"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/selector_square"
+        android:onClick="onClickCloseSession"
+        android:src="@drawable/ic_logout_white_58dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:layout_centerInParent="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        >
+        <RelativeLayout
+            android:id="@+id/layout_user_cash"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/common_margin_medium"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:orientation="vertical">
+            <!-- parte informacion -->
+            <RelativeLayout
+                android:id="@+id/rl_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/common_margin_huge3"
+                >
+
+                <TextView
+                    android:id="@+id/act_user_txt_name"
+                    android:layout_width="@dimen/width_circle_4"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="55dp"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/text_dark_blue"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:singleLine="false"
+                    android:textSize="@dimen/common_textsize_big"
+                    android:text="Pepito perez hernandez"
+                    android:background="@drawable/style_rectangle2"
+                    android:layout_marginBottom="10dp"
+                    />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_puntos_redimidos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_below="@+id/rl_name"
+                >
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_centerHorizontal="true"
+                    style="@style/wrapwrap"
+                    android:src="@drawable/style_circle_billetero" />
+
+                <TextView
+                    android:id="@+id/act_user_txt_billetero"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:text="9.999.999,00"
+                    android:textColor="@color/text_dark_blue"
+                    android:textSize="@dimen/size_txt_points2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/common_margin_medium"
+                    android:layout_marginStart="@dimen/common_margin_huge"
+                    android:layout_marginTop="90dp"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/act_user_txt_billetero_redeemed"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/act_user_txt_billetero"
+                    android:layout_width="@dimen/width_circle_4"
+                    android:background="@drawable/style_rectangle"
+                    android:text="@string/act_user_cant_billetero2"
+                    android:textSize="@dimen/common_textsize_big"
+                    android:textColor="@color/text_dark_blue"
+                    android:textStyle="bold"
+                    android:gravity="center"
+
+                    />
+
+                <ImageButton
+                    style="@style/wrapwrap"
+                    android:layout_below="@+id/act_user_txt_billetero_redeemed"
+                    android:src="@drawable/ic_actualizar_26dp"
+                    android:background="@drawable/selector_square"
+                    android:layout_marginStart="10dp"
+                    android:onClick="onClickActualizarBilletero"
+                    android:layout_centerHorizontal="true"
+                    />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <!-- parte botones -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5">
+
+            <GridLayout
+                android:id="@+id/layout_option_buttons"
+                style="@style/wrapwrap"
+                android:layout_centerInParent="true"
+                android:columnCount="1">
+
+                <GridLayout
+                    android:id="@+id/layout_option_callservice"
+                    style="@style/wrapwrap"
+                    android:layout_centerInParent="true"
+                    android:columnCount="2">
+
+                    <ImageButton
+                        android:id="@+id/act_user_btn_service"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/common_margin_medium"
+                        android:background="@drawable/style_rectangle"
+                        android:onClick="onClickCallService"
+                        android:src="@drawable/ic_call_58dp" />
+
+                    <ImageView
+                        android:id="@+id/act_user_img_service"
+                        style="@style/wrapwrap"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_call"
+                        android:visibility="invisible" />
+
+                </GridLayout>
+
+                <ImageButton
+                    android:id="@+id/act_cash_btn_upload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/common_margin_medium"
+                    android:onClick="onClickCargarMaquina"
+                    android:background="@drawable/style_rectangle"
+                    android:src="@drawable/ic_upload_txt_58dp" />
+
+                <ImageButton
+                    android:id="@+id/act_cash_btn_download"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/common_margin_medium"
+                    android:onClick="onClickDescargarMaquina"
+                    android:background="@drawable/style_rectangle"
+                    android:src="@drawable/ic_download_txt_58dp"
+                    />
+
+            </GridLayout>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

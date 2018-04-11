@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/wrapwrap"
+    android:layout_width="@dimen/dialog_width"
+    android:background="@drawable/shape_background_dialog"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+
+    <TextView
+        android:id="@+id/dialog_frag_input_txt_title"
+        style="@style/matchwrap.input"
+        android:layout_width="@dimen/dialog_width"
+        android:layout_margin="@dimen/common_padding_medium"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/common_textsize_bigger" />
+
+    <TextView
+        android:id="@+id/dialog_frag_input_txt_msg"
+        style="@style/matchwrap.input"
+        android:layout_width="@dimen/dialog_width"
+        android:layout_margin="@dimen/common_margin_big"
+        android:textColor="@android:color/white" />
+
+    <EditText
+        android:id="@+id/dialog_frag_input_edt"
+        style="@style/matchwrap.biginput"
+        android:layout_width="@dimen/dialog_width"
+        android:layout_margin="@dimen/common_margin_big"
+        android:background="@drawable/shape_custom_edittext_gnr"
+        android:textColor="@android:color/black"
+        android:inputType="textPassword"
+        />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/holo_blue_light"
+        />
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/common_margin_medium"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/dialog_frag_input_btn_cancel"
+            style="@style/wrapwrap.margin"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:padding="@dimen/common_padding_medium"
+            android:text="@string/common_cancel"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/common_textsize_big"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="@android:color/holo_blue_light"
+            />
+
+        <Button
+            android:id="@+id/dialog_frag_input_btn_accept"
+            style="@style/wrapwrap.margin"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="@dimen/common_padding_medium"
+            android:text="@string/common_accept"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/common_textsize_big"
+            />
+
+    </LinearLayout>
+</LinearLayout>
