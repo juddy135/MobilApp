@@ -262,7 +262,11 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
                         break;
                     default:
                         DEVOLVERDINERO=true;
-                        showOnlyConfirmDialog(getSupportFragmentManager(), getString(R.string.common_alert),codigoEstado[1]);
+                        String mensajeMostrar=codigoEstado[1];
+                        if(codigoEstado[0]==AppConstants.WebResult.MAQUINA_BLOQUEADA){
+                            mensajeMostrar=getString(R.string.common_error_no_carga_maquina);
+                        }
+                        showOnlyConfirmDialog(getSupportFragmentManager(), getString(R.string.common_alert),mensajeMostrar);
                         break;
 
                 }

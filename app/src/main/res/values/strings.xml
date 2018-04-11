@@ -25,7 +25,8 @@
     <string name="common_no_internet">No tienes conexión a internet</string>
     <string name="common_no_config">No se encontró archivo de configuración</string>
     <string name="common_search">Buscar</string>
-    <string name="common_error_cargar_maquina">La maquina debe estar desbloqueada</string>
+    <string name="common_error_cargar_maquina">La máquina debe estar desbloqueada</string>
+    <string name="common_error_no_carga_maquina">El estado de la máquina no permitió realizar la carga.</string>
     <string name="common_error_ver_premios">No encontramos tu premio</string>
     <string name="common_user_no_cashless">No tienes La Billetera activada, comunícate con la administración</string>
     <string name="mesage_client_blocked">Tu usuario a sido bloqueado, comunícate con la administración para cualquier inquietud</string>
