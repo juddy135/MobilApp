@@ -284,10 +284,6 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
                             MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),getString(R.string.common_error_cargar_maquina));
                         }
                         break;
-                    case AppConstants.WebResult.FAIL:
-                            valorPremio="0.00";
-                            MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),info.getMessage());
-                        break;
                     default:
                         if(AppConstants.RESULT_DIALOG_CARGAR==actionConfirm){
                             action=AppConstants.RESULT_DIALOG_CARGAR;
