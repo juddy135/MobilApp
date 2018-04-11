@@ -215,7 +215,7 @@ public class ActivityUser extends ActivityBase implements
             currentAction = 0;
             ALLOW_VIDEO = false;
             new AsyncTaskCloseSession(this, responseCloseSession).execute();
-        }else {
+        }else if(requestCode!=ACTION_CASHLESS){
             Toast.makeText(this, R.string.act_user_no_select_snack, Toast.LENGTH_LONG).show();
             imgBar.setVisibility(GONE);
         }
@@ -321,6 +321,7 @@ public class ActivityUser extends ActivityBase implements
                         backToValidateService();
                         break;
                     case AppConstants.WebResult.SESSION_EXPIRED:
+                        finishActivity(ACTION_CASHLESS);
                         setVisibilityClosedSession();
                         MsgUtils.biggetToast(ActivityUser.this, getString(R.string.act_user_session_expired));
                         break;
