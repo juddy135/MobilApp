@@ -58,6 +58,7 @@
 
 
     <dimen name="width_points">150dp</dimen>
+    <dimen name="width_billetera">200dp</dimen>
     <dimen name="side_btn_pad_num">46dp</dimen>
 
     <dimen name="width_circle">160dp</dimen>

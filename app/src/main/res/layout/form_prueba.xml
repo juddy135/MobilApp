@@ -5,87 +5,67 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient">
 
-
     <RelativeLayout
-        android:id="@+id/rl_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_margin_huge3"
-        >
-
-        <ImageView
-            android:id="@+id/iv_starts"
-            android:layout_width="200dp"
-            android:layout_height="140dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/succes"
-            />
-
-        <TextView
-            android:id="@+id/act_user_txt_name"
-            android:layout_below="@+id/iv_starts"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common_margin_huge"
-            android:layout_centerInParent="true"
-            android:textColor="@color/text_dark_blue"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:maxLines="2"
-            android:singleLine="false"
-            android:textSize="@dimen/common_textsize_big"
-            android:text="Pepito perez hernandez"
-            android:background="@drawable/style_rectangle2"
-            />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_puntos_redimidos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_margin_huge3"
-        android:layout_below="@+id/rl_name"
+        android:id="@+id/act_user_lyt_fidel"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:layout_centerInParent="true"
         >
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_centerHorizontal="true"
-            style="@style/wrapwrap"
-            android:src="@drawable/style_circle" />
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/shape_circle_background" />
+
 
         <TextView
-            android:id="@+id/act_num_maquina"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:gravity="center"
-            android:text="9999"
-            android:textColor="@color/text_dark_blue"
-            android:textSize="@dimen/size_txt_points"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/common_margin_small"
+            android:id="@+id/act_user_txt_name"
+            style="@style/matchwrap.input.title"
+            android:layout_width="280dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="@dimen/common_margin_bigger"
             android:layout_marginStart="@dimen/common_margin_huge"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="@dimen/common_margin_huge"
+            android:background="@drawable/paralel_back_fidelizacion_2"
+            android:gravity="center"
+            android:textSize="@dimen/common_textsize_biggest"
             />
 
         <TextView
             android:id="@+id/act_user_txt_billetero_redeemed"
-            android:layout_height="wrap_content"
+            style="@style/matchwrap.input.title"
+            android:layout_below="@+id/act_user_txt_name"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/act_num_maquina"
-            android:layout_width="@dimen/width_circle"
-            android:background="@drawable/style_rectangle3"
-            android:text="@string/act_num_maquina"
-            android:textSize="@dimen/common_textsize_small"
-            android:textColor="@color/text_dark_blue"
-            android:textStyle="bold"
+            android:layout_marginBottom="@dimen/common_margin_big"
             android:gravity="center"
+            android:text="@string/act_user_cant_puntos" />
 
+        <TextView
+            android:id="@+id/act_user_txt_billetero"
+            style="@style/matchwrap.input.title"
+            android:layout_width="@dimen/width_points"
+            android:layout_below="@+id/act_user_txt_billetero_redeemed"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/common_margin_big"
+            android:background="@drawable/style_rectangle4"
+            android:gravity="center"
+            android:padding="@dimen/common_padding_medium"
+            android:text="@string/act_user_consulting_points"
+            android:textSize="@dimen/common_textsize_bigger" />
+
+        <ImageButton
+            style="@style/wrapwrap"
+            android:layout_below="@+id/act_user_txt_billetero"
+            android:src="@drawable/ic_actualizar_26dp"
+            android:background="@drawable/selector_square"
+            android:layout_marginStart="10dp"
+            android:onClick="onClickActualizarBilletero"
+            android:layout_centerHorizontal="true"
             />
 
     </RelativeLayout>
-
-
 
 </RelativeLayout>
