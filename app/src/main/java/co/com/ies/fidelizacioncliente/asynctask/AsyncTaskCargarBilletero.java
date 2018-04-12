@@ -77,6 +77,7 @@ public class AsyncTaskCargarBilletero  extends AsyncTask<String, Void, String[]>
             //Parametro Body
             ModificarBilleteroBody body= new ModificarBilleteroBody( preferences.getString(AppConstants.Prefs.SERV_USR, ""),
                     preferences.getString(AppConstants.Prefs.ID_CASINO, ""),docUsr,valor,claveUsr);
+            body.setSerial( preferences.getString(AppConstants.Prefs.SERIAL, ""));
 
             GsonBuilder gsonBuilder = new GsonBuilder();
             // register type adapters here, specify field naming policy, etc.

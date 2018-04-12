@@ -90,8 +90,8 @@
     <string name="act_user_cant_puntos2">Puntos totales</string>
     <string name="act_user_cant_puntos_redimidos">Puntos día:</string>
     <string name="act_user_cant_puntos_redimidos2">Puntos día</string>
-    <string name="act_user_cant_billetero">Billetero:</string>
-    <string name="act_user_cant_billetero2">Billetero</string>
+    <string name="act_user_cant_billetero">Billetera:</string>
+    <string name="act_user_cant_billetero2">Billetera</string>
     <string name="act_user_no_bar_items">No hay lista de snacks, habla con el administrador</string>
     <string name="act_user_no_select_snack">No elegiste ningún snack</string>
     <string name="act_user_cashless_out">Saliste del billetero</string>

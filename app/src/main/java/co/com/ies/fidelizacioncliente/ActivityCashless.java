@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
@@ -27,6 +28,7 @@ import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskPagarPremio;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskRedimirBilletero;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskVerPremios;
 import co.com.ies.fidelizacioncliente.base.ActivityBase;
+import co.com.ies.fidelizacioncliente.dialog.DialogFragAlert;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragClave;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragConfirm;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragOnlyConfirm;
@@ -59,7 +61,7 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
     private SharedPreferences preferences;
     private NumberFormat numberFormatter;
     private Locale locale;
-    private String docUSR,claveUSR, valorBilletero="0", valorPremio="0",valorOldBilletero;
+    private String docUSR,claveUSR, valorBilletero="0", valorPremio="0",valorOldBilletero="0.0",valorActBilletero="0.0";
     private int action,actionConfirm;
     private boolean DEVOLVERDINERO=false;
 
@@ -188,8 +190,7 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
                         txtBilletero.setText(numberFormatter.format(bill));
                         break;
                     case AppConstants.WebResult.CLAVE_VENCIDA:
-                        MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),
-                                getString(R.string.message_clave_vencida));
+                        MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),getString(R.string.message_clave_vencida));
                         break;
                     default:
                         MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),codigoEstado[1]);
@@ -207,19 +208,27 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
                     case AppConstants.WebResult.OK:
                         Log.i("BUG","CARGA OK");
                         if(DEVOLVERDINERO){
+                            Log.i("BUG","DEVOLVER");
                             DEVOLVERDINERO=false;
                             double act=Double.valueOf(valorOldBilletero);
                             double sum=Double.valueOf(valorPremio);
                             valorOldBilletero="0.00";
                             valorBilletero=String.valueOf(act+sum);
                             txtBilletero.setText(numberFormatter.format(act+sum));
-                            Log.i("BUG","DEVOLVER");
                         }else{
-                            double act=Double.valueOf(txtBilletero.getText().toString());
+                            Log.i("BUG","NO DEVOLVER");
+                            double act;
+                            try {
+                                DecimalFormat dF = new DecimalFormat("0.00");
+                                Number num = dF.parse(valorActBilletero);
+                                act = num.doubleValue();
+                            } catch (Exception e) {
+                                act = 0.0d;
+                            }
                             double sum=Double.valueOf(valorPremio);
                             valorBilletero=String.valueOf(act+sum);
+                            valorActBilletero="0.00";
                             txtBilletero.setText(numberFormatter.format(act+sum));
-                            Log.i("BUG","NO DEVOLVER");
                         }
 
                         break;
@@ -282,7 +291,7 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
                         //Si se obtuvo el premio y la accion es DESCARGAR
                         if(AppConstants.RESULT_DIALOG_DESCARGAR== action){
                             if(info.getInfo()!=null && info.getInfo().getConsecutivo()!=null && !info.getInfo().getConsecutivo().isEmpty()){
-                                valorPremio=info.getInfo().getMontoReal()!=null?info.getInfo().getMontoReal():"0";
+                                valorPremio=info.getInfo().getMontoReal()!=null?info.getInfo().getMontoReal():"0.00";
                                 new AsyncTaskPagarPremio(ActivityCashless.this,responsePagarPremio).execute(info.getInfo().getConsecutivo());
                             }
                         }else if(AppConstants.RESULT_DIALOG_CARGAR== actionConfirm){
@@ -393,6 +402,15 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
         action=resultCode;
         if(AppConstants.RESULT_DIALOG_DESCARGAR== resultCode){
             claveUSR=clave;
+            if(txtBilletero.getText().toString().isEmpty()){
+                Log.i("BILLETERA","VACIA");
+                valorActBilletero="0.00";
+            }else{
+                Log.i("BILLETERA","FULL");
+                valorActBilletero=txtBilletero.getText().toString();
+                Log.i("BILLETERA",valorActBilletero);
+
+            }
             if (WebUtils.isOnline(ActivityCashless.this)) {
                 new AsyncTaskVerPremios(ActivityCashless.this, responseVerPremios).execute();
             }
@@ -465,6 +483,5 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
         newFragment.show(supportFragManager, "dialogonlyconfirm");
 
     }
-
 
 }

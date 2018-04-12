@@ -46,23 +46,21 @@
     <dimen name="bigger_circle_diameter">100dp</dimen>
     <dimen name="width_field_doc">300dp</dimen>
     <dimen name="circle_size">260dp</dimen>
-    <dimen name="circle_size_points_1">140dp</dimen>
-    <dimen name="circle_size_points_2">120dp</dimen>
-    <dimen name="circle2_size_points_1">120dp</dimen>
-    <dimen name="circle2_size_points_2">100dp</dimen>
+    <dimen name="circle_size_points_1">160dp</dimen>
+    <dimen name="circle_size_points_2">140dp</dimen>
+    <dimen name="circle2_size_points_1">140dp</dimen>
+    <dimen name="circle2_size_points_2">120dp</dimen>
     <dimen name="circle3_size_points_1">100dp</dimen>
     <dimen name="circle3_size_points_2">80dp</dimen>
     <dimen name="circle4_size_points_1">220dp</dimen>
     <dimen name="circle4_size_points_2">200dp</dimen>
 
-
-
     <dimen name="width_points">150dp</dimen>
     <dimen name="width_billetera">220dp</dimen>
     <dimen name="side_btn_pad_num">46dp</dimen>
 
-    <dimen name="width_circle">160dp</dimen>
-    <dimen name="width_circle_2">140dp</dimen>
+    <dimen name="width_circle">180dp</dimen>
+    <dimen name="width_circle_2">160dp</dimen>
     <dimen name="width_circle_3">100dp</dimen>
     <dimen name="width_circle_4">240dp</dimen>
 

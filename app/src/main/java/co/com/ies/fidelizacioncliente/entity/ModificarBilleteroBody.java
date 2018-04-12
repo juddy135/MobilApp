@@ -6,6 +6,7 @@ public class ModificarBilleteroBody {
     private String documentoCliente;
     private String valorBilletero;
     private String claveDinamica;
+    private String serial;
 
     public ModificarBilleteroBody(String nombreUsuario, String codigoCasino, String documentoCliente, String valorBilletero, String claveDinamica) {
         this.nombreUsuario = nombreUsuario;
@@ -13,6 +14,7 @@ public class ModificarBilleteroBody {
         this.documentoCliente = documentoCliente;
         this.valorBilletero = valorBilletero;
         this.claveDinamica = claveDinamica;
+
     }
 
     public String getNombreUsuario() {
@@ -53,5 +55,13 @@ public class ModificarBilleteroBody {
 
     public void setClaveDinamica(String claveDinamica) {
         this.claveDinamica = claveDinamica;
+    }
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
     }
 }

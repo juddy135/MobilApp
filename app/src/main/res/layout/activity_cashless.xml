@@ -48,57 +48,85 @@
             android:gravity="center"
             >
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="260dp"
-                android:layout_height="260dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/shape_circle_background" />
+            <RelativeLayout
+                android:id="@+id/rl_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:id="@+id/act_user_txt_name"
+                    android:layout_width="@dimen/width_circle_4"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/transparent_white"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:singleLine="false"
+                    android:textSize="@dimen/common_textsize_big"
+                    android:text="Pepito perez hernandez"
+                    android:background="@drawable/style_rectangle2"
+                    android:layout_marginBottom="10dp"
+                    />
 
 
-            <TextView
-                android:id="@+id/act_user_txt_name"
-                style="@style/matchwrap.input.title"
-                android:layout_width="280dp"
-                android:layout_height="60dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="25dp"
-                android:background="@drawable/paralel_back_fidelizacion_2"
-                android:gravity="center"
-                android:textSize="@dimen/common_textsize_biggest" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/act_user_txt_billetero_redeemed"
-                style="@style/matchwrap.input.title"
-                android:layout_below="@+id/act_user_txt_name"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/common_margin_big"
-                android:gravity="center"
-                android:text="@string/act_user_cant_billetero" />
+            <RelativeLayout
+                android:id="@+id/rl_puntos_redimidos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_name"
+                >
 
-            <TextView
-                android:id="@+id/act_user_txt_billetero"
-                style="@style/matchwrap.input.title"
-                android:layout_width="@dimen/width_billetera"
-                android:layout_below="@+id/act_user_txt_billetero_redeemed"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/common_margin_big"
-                android:background="@drawable/style_rectangle4"
-                android:gravity="center"
-                android:padding="@dimen/common_padding_medium"
-                android:text="999.999.999,00"
-                android:textSize="@dimen/common_textsize_big" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_centerHorizontal="true"
+                    style="@style/wrapwrap"
+                    android:src="@drawable/style_circle_billetero" />
 
-            <ImageButton
-                style="@style/wrapwrap"
-                android:layout_below="@+id/act_user_txt_billetero"
-                android:src="@drawable/ic_actualizar_26dp"
-                android:background="@drawable/selector_square"
-                android:layout_marginStart="10dp"
-                android:onClick="onClickActualizarBilletero"
-                android:layout_centerHorizontal="true"
-                />
+                <TextView
+                    android:id="@+id/act_user_txt_billetero"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:text="9.999.999,00"
+                    android:textColor="@color/text_dark_blue"
+                    android:textSize="@dimen/size_txt_points2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/common_margin_medium"
+                    android:layout_marginStart="@dimen/common_margin_huge"
+                    android:layout_marginTop="90dp"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/act_user_txt_billetero_redeemed"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/act_user_txt_billetero"
+                    android:layout_width="@dimen/width_circle_4"
+                    android:background="@drawable/style_rectangle"
+                    android:text="@string/act_user_cant_billetero2"
+                    android:textSize="@dimen/common_textsize_big"
+                    android:textColor="@color/text_dark_blue"
+                    android:textStyle="bold"
+                    android:gravity="center"
+
+                    />
+
+                <ImageButton
+                    style="@style/wrapwrap"
+                    android:layout_below="@+id/act_user_txt_billetero_redeemed"
+                    android:src="@drawable/ic_actualizar_26dp"
+                    android:background="@drawable/selector_square"
+                    android:layout_marginStart="10dp"
+                    android:onClick="onClickActualizarBilletero"
+                    android:layout_centerHorizontal="true"
+                    />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

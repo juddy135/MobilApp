@@ -211,9 +211,9 @@ public class ActivityUser extends ActivityBase implements
                 imgCallService.setVisibility(View.VISIBLE);
             }
             imgBar.setVisibility(GONE);
-            /*if(taskPoints==null){
+            if(taskPoints==null){
                 startAskingPoints();
-            }*/
+            }
         }else if(resultCode == AppConstants.RESULT_ACTIVITY_CLOSE_OK){
             currentAction = 0;
             ALLOW_VIDEO = false;
@@ -1013,7 +1013,7 @@ public class ActivityUser extends ActivityBase implements
     }
 
     public void iniciarCashless(){
-        //stopAskingPoints();
+        stopAskingPoints();
         Intent i = new Intent(this, ActivityCashless.class);
         i.putExtra(AppConstants.Generic.SERVICE_ASKED,serviceAsked);
         i.putExtra(AppConstants.Generic.CLAVE_CLIENTE,claveCliente);
