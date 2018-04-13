@@ -132,7 +132,7 @@
 
             <LinearLayout
                 style="@style/matchmatch.margin"
-                android:layout_marginBottom="@dimen/common_margin_medium"
+                android:layout_marginBottom="@dimen/common_margin_huge4"
                 android:orientation="vertical">
 
                 <TextView
@@ -141,7 +141,7 @@
 
                 <Spinner
                     android:id="@+id/act_setting_spn_uso"
-                    style="@style/spinner_custom"
+                    style="@style/spinner_style"
                     android:background="@drawable/shape_custom_edittext_gnr"
                     android:entries="@array/usos_app"
                     android:popupBackground="@android:color/white" />
@@ -152,7 +152,7 @@
 
                 <Spinner
                     android:id="@+id/act_setting_spn_casino"
-                    style="@style/spinner_custom"
+                    style="@style/spinner_style"
                     android:background="@drawable/shape_custom_edittext_gnr"
                     android:popupBackground="@android:color/white" />
 
@@ -162,7 +162,7 @@
 
                 <Spinner
                     android:id="@+id/act_setting_spn_id_machine"
-                    style="@style/spinner_custom"
+                    style="@style/spinner_style"
                     android:background="@drawable/shape_custom_edittext_gnr"
                     android:popupBackground="@android:color/white" />
 

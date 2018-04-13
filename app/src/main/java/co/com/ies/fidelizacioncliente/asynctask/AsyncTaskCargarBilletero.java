@@ -59,7 +59,8 @@ public class AsyncTaskCargarBilletero  extends AsyncTask<String, Void, String[]>
         String docUsr = params[0];
         String claveUsr = params[1];
         String valor = params[2];
-        String[] result = new String[]{AppConstants.WebResult.FAIL, context.getString(R.string.common_fail)};
+        String serial=params[3];
+        String[] result = new String[]{AppConstants.WebResult.FAIL, context.getString(R.string.common_fail), "0.00"};
         String service = AppConstants.WebServs.CARGAR_BILLETERO;
         StringBuilder response = new StringBuilder();
 
@@ -77,7 +78,7 @@ public class AsyncTaskCargarBilletero  extends AsyncTask<String, Void, String[]>
             //Parametro Body
             ModificarBilleteroBody body= new ModificarBilleteroBody( preferences.getString(AppConstants.Prefs.SERV_USR, ""),
                     preferences.getString(AppConstants.Prefs.ID_CASINO, ""),docUsr,valor,claveUsr);
-            body.setSerial( preferences.getString(AppConstants.Prefs.SERIAL, ""));
+            body.setSerial(serial);
 
             GsonBuilder gsonBuilder = new GsonBuilder();
             // register type adapters here, specify field naming policy, etc.
@@ -99,6 +100,7 @@ public class AsyncTaskCargarBilletero  extends AsyncTask<String, Void, String[]>
             JSONObject jsonStatus = jsonObject.getJSONObject(AppConstants.WebParams.STATUS);
             result[0] = jsonStatus.getString(AppConstants.WebParams.CODE);
             result[1] = jsonStatus.getString(AppConstants.WebParams.MESSAGE);
+            result[2] = jsonObject.getString(AppConstants.WebParams.VALOR_BILLETERO);
 
         } catch (IOException e) {
             MsgUtils.handleException(e);

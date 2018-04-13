@@ -211,9 +211,9 @@ public class ActivityUser extends ActivityBase implements
                 imgCallService.setVisibility(View.VISIBLE);
             }
             imgBar.setVisibility(GONE);
-            if(taskPoints==null){
+            /*if(taskPoints==null){
                 startAskingPoints();
-            }
+            }*/
         }else if(resultCode == AppConstants.RESULT_ACTIVITY_CLOSE_OK){
             currentAction = 0;
             ALLOW_VIDEO = false;
@@ -227,23 +227,6 @@ public class ActivityUser extends ActivityBase implements
         ALLOW_VIDEO = true;
 
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onDialogConfirmOkClick(DialogFragment dialogFragment) {
-        switch (currentAction) {
-            case ACTION_CLOSE_SESSION:
-                closeSesion();
-                break;
-            default:
-                break;
-
-        }
-    }
-
-    @Override
-    public void onDialogConfirmCancelClick(DialogFragment dialogFragment) {
-        ALLOW_VIDEO = true;
     }
 
     private void obtenerComponentes() {
@@ -512,17 +495,14 @@ public class ActivityUser extends ActivityBase implements
                         valorBilletero=codigoEstado[2];
                         iniciarCashless();
                         break;
-                    case AppConstants.WebResult.FAIL:
-                        valorBilletero="";
-                        MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),
-                                getString(R.string.message_clave_vencida));
-                        break;
                     case AppConstants.WebResult.CLAVE_VENCIDA:
+                        valorBilletero="";
                         MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),
                                 getString(R.string.message_clave_vencida));
                         Toast.makeText(getApplicationContext(), codigoEstado[1], Toast.LENGTH_LONG).show();
                         break;
                     default:
+                        valorBilletero="";
                         MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),codigoEstado[1]);
                         break;
 
@@ -567,6 +547,8 @@ public class ActivityUser extends ActivityBase implements
             setVisibilityCashless();
         }
     }
+
+    //______________________________________________________________________________METODOS ON-CLICK
 
     public void onClickMenu(View view) {
 
@@ -729,6 +711,20 @@ public class ActivityUser extends ActivityBase implements
         }
     }
 
+    private void configInitialKeyboard() {
+        if (paramEnableKeyboard) {
+            gridNumberPad.setVisibility(GONE);
+            numberKeyboard = new LetterNumberKeyboard(this, R.id.keyboardview, R.xml.keyboard_lettersnumbers, keyboardListener);
+            numberKeyboard.registerTextView(edtDoc);
+
+        } else {
+            edtDoc.setEnabled(false);
+            btnKeyBoardShow.setVisibility(GONE);
+        }
+    }
+
+    //______________________________________________________________________________METODOS SET-VISIBILITY
+
     private void setVisibilityFidelizacion() {
         lytCasino.setVisibility(GONE);
         btnBar.setVisibility(View.INVISIBLE);
@@ -833,18 +829,6 @@ public class ActivityUser extends ActivityBase implements
         startShowingVideo();*/
     }
 
-    private void configInitialKeyboard() {
-        if (paramEnableKeyboard) {
-            gridNumberPad.setVisibility(GONE);
-            numberKeyboard = new LetterNumberKeyboard(this, R.id.keyboardview, R.xml.keyboard_lettersnumbers, keyboardListener);
-            numberKeyboard.registerTextView(edtDoc);
-
-        } else {
-            edtDoc.setEnabled(false);
-            btnKeyBoardShow.setVisibility(GONE);
-        }
-    }
-
     private void setVisibilityInputForm() {
         if (paramEnableKeyboard) {
             gridNumberPad.setVisibility(GONE);
@@ -862,6 +846,8 @@ public class ActivityUser extends ActivityBase implements
             numberKeyboard.showCustomKeyboard(edtDoc);
         }
     }
+
+    //______________________________________________________________________________ASK PUNTOS____________________
 
     private void startAskingPoints() {
         url = preferences.getString(AppConstants.Prefs.URL, "");
@@ -887,6 +873,8 @@ public class ActivityUser extends ActivityBase implements
             taskPoints = null;
         }
     }
+
+    //______________________________________________________________________________VIDEO____________________________
 
     private void startShowingVideo() {
 
@@ -936,21 +924,42 @@ public class ActivityUser extends ActivityBase implements
         }
     }
 
-
     public void closeSesion(){
         currentAction = 0;
         ALLOW_VIDEO = false;
         new AsyncTaskCloseSession(this, responseCloseSession).execute();
     }
 
-    //_________________________________________CLAVE DINAMICA________________________________________________________
+    //_________________________________________DIALOG INTERFACE___________________________________________
+    @Override
+    public void onDialogConfirmOkClick(DialogFragment dialogFragment) {
+        switch (currentAction) {
+            case ACTION_CLOSE_SESSION:
+                closeSesion();
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    @Override
+    public void onDialogConfirmCancelClick(DialogFragment dialogFragment) {
+        ALLOW_VIDEO = true;
+    }
+
+
+    /*__________CLAVE DINAMICA___________________*/
     @Override
     public void onDialogConfirmClick(DialogFragment dialogFragment, int resultCode, String clave) {
-        if(claveCash){//ingreso a CASHLESS
+        Log.i("CLAVE OK","1");
+        if(claveCash || claveAction==ACTION_CASHLESS){//ingreso a CASHLESS
+            Log.i("CLAVE OK","2");
             claveCliente=clave;
             consultarBilleteroCliente();
             //iniciarCashless();
         }else{//LOGUEO
+            Log.i("CLAVE OK","3");
             claveCliente=clave;
             long doc;
             try {
@@ -983,7 +992,7 @@ public class ActivityUser extends ActivityBase implements
         }
     }
 
-    /*______________MODAL CLAVE DINAMICA___________*/
+    /*________________________________MODAL CLAVE DINAMICA___________*/
 
     public void dialogClaveDinamica(String clave, int action){
         DialogFragment dialog = new DialogFragClave();
@@ -1007,13 +1016,14 @@ public class ActivityUser extends ActivityBase implements
     }
 
     public void consultarBilleteroCliente(){
+        Log.i("BILLETERO","ok");
         if (WebUtils.isOnline(ActivityUser.this)) {
             new AsyncTaskAskBilletero(ActivityUser.this,responseConsultarBilletero).execute(FidelizacionApplication.getInstance().getUserDoc(), claveCliente);
         }
     }
 
     public void iniciarCashless(){
-        stopAskingPoints();
+        //stopAskingPoints();
         Intent i = new Intent(this, ActivityCashless.class);
         i.putExtra(AppConstants.Generic.SERVICE_ASKED,serviceAsked);
         i.putExtra(AppConstants.Generic.CLAVE_CLIENTE,claveCliente);

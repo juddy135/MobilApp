@@ -132,6 +132,7 @@ public class AppConstants {
         public static final String GET_ALL = "cargaTodo";
         public static final String VALOR_BILLETERO = "billeteroCliente";
         public static final String CONSECUTIVO = "consecutivoPremio";
+        public static final String VALOR_CARGA = "carga";
 
         public static final String ITEM_CONSECUTIVO="consecutivo";
         public static final String ITEM_FECHA="fechaGeneracion";

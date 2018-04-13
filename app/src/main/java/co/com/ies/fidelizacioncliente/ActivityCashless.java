@@ -206,30 +206,16 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
             public void processFinish(String[] codigoEstado) {
                 switch (codigoEstado[0]) {
                     case AppConstants.WebResult.OK:
-                        Log.i("BUG","CARGA OK");
-                        if(DEVOLVERDINERO){
-                            Log.i("BUG","DEVOLVER");
-                            DEVOLVERDINERO=false;
-                            double act=Double.valueOf(valorOldBilletero);
-                            double sum=Double.valueOf(valorPremio);
-                            valorOldBilletero="0.00";
-                            valorBilletero=String.valueOf(act+sum);
-                            txtBilletero.setText(numberFormatter.format(act+sum));
-                        }else{
-                            Log.i("BUG","NO DEVOLVER");
-                            double act;
-                            try {
-                                DecimalFormat dF = new DecimalFormat("0.00");
-                                Number num = dF.parse(valorActBilletero);
-                                act = num.doubleValue();
-                            } catch (Exception e) {
-                                act = 0.0d;
-                            }
-                            double sum=Double.valueOf(valorPremio);
-                            valorBilletero=String.valueOf(act+sum);
-                            valorActBilletero="0.00";
-                            txtBilletero.setText(numberFormatter.format(act+sum));
+                        valorBilletero=codigoEstado[2];
+                        try {
+                            DecimalFormat dF = new DecimalFormat("0.00");
+                            Number num = dF.parse(valorBilletero);
+                            txtBilletero.setText(numberFormatter.format(num.doubleValue()));
+                            Log.i("CARGAR",valorBilletero);
+                        } catch (Exception e) {
+                            Log.i("CARGAR",e.toString());
                         }
+
 
                         break;
                     default:
@@ -248,7 +234,16 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
                     case AppConstants.WebResult.OK:
                         //Cargar Maquina
                         valorOldBilletero=valorBilletero;
-                        new AsyncTaskCargarMaquina(ActivityCashless.this, responseCargarMaquina).execute(valorBilletero);
+                        valorBilletero=codigoEstado[2];
+                        try {
+                            DecimalFormat dF = new DecimalFormat("0.00");
+                            Number num = dF.parse(valorBilletero);
+                            txtBilletero.setText(numberFormatter.format(num.doubleValue()));
+                            Log.i("DESCARGAR",valorBilletero);
+                        } catch (Exception e) {
+                            Log.i("DESCARGAR",e.toString());
+                        }
+                        new AsyncTaskCargarMaquina(ActivityCashless.this, responseCargarMaquina).execute(codigoEstado[3]);
                         break;
                     default:
                         MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),codigoEstado[1]);
@@ -264,9 +259,9 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
                 switch (codigoEstado[0]) {
                     case AppConstants.WebResult.OK:
                         DEVOLVERDINERO=false;
-                        valorBilletero="0.00";
-                        double bill=Double.valueOf(valorBilletero);
-                        txtBilletero.setText(numberFormatter.format(bill));
+                        valorOldBilletero="0.00";
+                        //double bill=Double.valueOf(valorBilletero);
+                        //txtBilletero.setText(numberFormatter.format(bill));
                         MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),getString(R.string.common_load_machine_ok));
                         break;
                     default:
@@ -317,13 +312,13 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
             public void processFinish(String[] codigoEstado) {
                 switch (codigoEstado[0]) {
                     case AppConstants.WebResult.OK:
+                        Log.i("PREMIO",valorPremio);
                         //Si se pudo pagar premio, cargar billetero
-                        new AsyncTaskCargarBilletero(ActivityCashless.this,responseCargarBilletero).execute(docUSR,claveUSR,valorPremio);
+                        new AsyncTaskCargarBilletero(ActivityCashless.this,responseCargarBilletero).execute(docUSR,claveUSR,valorPremio, preferences.getString(AppConstants.Prefs.SERIAL, ""));
                         break;
                     default:
                         MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),codigoEstado[1]);
                         break;
-
                 }
             }
         };
@@ -391,9 +386,19 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
         Log.i("PLATA","DEVOLVER: "+DEVOLVERDINERO);
 
         if(DEVOLVERDINERO){
+            try {
+                DecimalFormat dF = new DecimalFormat("0.00");
+                Number numAct = dF.parse(valorBilletero);
+                Number numOld = dF.parse(valorOldBilletero);
+                double num=numOld.doubleValue()-numAct.doubleValue();
+                String sum=String.valueOf(num);
+                //Si la maquina no se carga, devolver el valor del billetero
+                new AsyncTaskCargarBilletero(ActivityCashless.this,responseCargarBilletero).execute(docUSR,claveUSR,sum,"");
+                Log.i("DEVOLVER",sum);
+            } catch (Exception e) {
+                Log.i("DEVOLVER",e.toString());
+            }
 
-            //Si la maquina no se carga, devolver el valor del billetero
-            new AsyncTaskCargarBilletero(ActivityCashless.this,responseCargarBilletero).execute(docUSR,claveUSR,valorBilletero);
         }
     }
                 //______CLAVE DINAMICA
@@ -416,7 +421,18 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
             }
         }else if(AppConstants.RESULT_DIALOG_CARGAR== resultCode){
             if (WebUtils.isOnline(ActivityCashless.this)) {
-                new AsyncTaskRedimirBilletero(ActivityCashless.this, responseRedimirBilletero).execute(docUSR, claveUSR, valorBilletero);
+
+                try {
+                    DecimalFormat dF = new DecimalFormat("0.00");
+                    Number num = dF.parse(valorBilletero);
+                    String entero=String.valueOf(num.intValue());
+                    new AsyncTaskRedimirBilletero(ActivityCashless.this, responseRedimirBilletero).execute(docUSR, claveUSR, entero);
+                    Log.i("REDIMIR",entero);
+                } catch (Exception e) {
+                    Log.i("REDIMIR",e.toString());
+                }
+
+
             }
         }else {
             claveUSR="";

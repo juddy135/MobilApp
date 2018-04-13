@@ -122,17 +122,20 @@
         <item name="android:layout_width">@dimen/regular_circle_diameter</item>
         <item name="android:layout_height">@dimen/regular_circle_diameter</item>
     </style>
-
+<!--
     <style name="spinner_custom" parent="Widget.AppCompat.Spinner.Underlined">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/common_margin_medium</item>
         <item name="android:padding">@dimen/common_padding_medium</item>
     </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+-->
+    <style name="spinner_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/common_margin_medium</item>
+        <item name="android:padding">@dimen/common_padding_medium</item>
+    </style>
 
     <style name="ctm_btn_pad_num">
         <item name="android:layout_height">@dimen/side_btn_pad_num</item>
@@ -140,6 +143,8 @@
         <item name="android:layout_margin">@dimen/common_margin_small</item>
         <item name="android:background">@drawable/style_rectangle</item>
         <item name="android:textSize">@dimen/common_textsize_biggest</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="dialog_component">
