@@ -32,12 +32,41 @@
         android:maxLength="@integer/max_length_clave_dinamica"
         />
 
+    <LinearLayout
+        android:id="@+id/layout_resend_email"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/holo_blue_light"
+            />
+
+        <Button
+            android:id="@+id/dialog_frag_clave_btn_resend_email"
+            android:gravity="center"
+            android:layout_gravity="center"
+            style="@style/wrapwrap"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="@dimen/common_padding_medium"
+            android:text="@string/common_resend_email"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/common_textsize_medium"
+            />
+
+    </LinearLayout>
+
+
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@android:color/holo_blue_light"
         />
-
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"

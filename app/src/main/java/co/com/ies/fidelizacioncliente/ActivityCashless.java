@@ -24,6 +24,7 @@ import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskCallService;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskCargarBilletero;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskCargarMaquina;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskEnviarClave;
+import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskEnviarClaveCorreo;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskPagarPremio;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskRedimirBilletero;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskVerPremios;
@@ -55,6 +56,7 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
     private AsyncTaskCargarBilletero.AsyncResponse responseCargarBilletero;
     private AsyncTaskRedimirBilletero.AsyncResponse responseRedimirBilletero;
     private AsyncTaskCargarMaquina.AsyncResponse responseCargarMaquina;
+    private AsyncTaskEnviarClaveCorreo.AsyncResponse responseEnviarClaveCorreo;
     private AsyncTaskVerPremios.AsyncResponse responseVerPremios;
     private AsyncTaskPagarPremio.AsyncResponse responsePagarPremio;
 
@@ -62,7 +64,7 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
     private NumberFormat numberFormatter;
     private Locale locale;
     private String docUSR,claveUSR, valorBilletero="0", valorPremio="0",valorOldBilletero="0.0",valorActBilletero="0.0";
-    private int action,actionConfirm;
+    private int action,actionConfirm, conteoResend;
     private boolean DEVOLVERDINERO=false;
 
     @Override
@@ -170,7 +172,7 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
                 switch (codigoEstado[0]) {
                     case AppConstants.WebResult.OK:
                         claveUSR=codigoEstado[2];
-                        dialogClaveDinamica(claveUSR,action);
+                        dialogClaveDinamica(claveUSR,action,conteoResend);
                         break;
                     default:
                         MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),codigoEstado[1]);
@@ -178,6 +180,29 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
                 }
             }
         };
+
+        /*______ENVIAR CLAVE DINAMICA EMAIL_____*/
+        responseEnviarClaveCorreo= new AsyncTaskEnviarClaveCorreo.AsyncResponse() {
+            @Override
+            public void processFinish(String[] codigoEstado) {
+                switch (codigoEstado[0]) {
+                    case AppConstants.WebResult.OK:
+                        claveUSR=codigoEstado[2];
+                        dialogClaveDinamica(claveUSR,action, conteoResend);
+                        break;
+                    case AppConstants.WebResult.FAIL:
+                        Toast.makeText(getApplicationContext(), codigoEstado[1], Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),codigoEstado[1]);
+                        break;
+
+                }
+
+
+            }
+        };
+
         /*______________CONSULTAR BILLETERO_______________*/
         responseConsultarBilletero= new AsyncTaskAskBilletero.AsyncResponse() {
             @Override
@@ -404,6 +429,7 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
                 //______CLAVE DINAMICA
     @Override
     public void onDialogConfirmClick(DialogFragment dialogFragment, int resultCode, String clave) {
+        conteoResend=0;
         action=resultCode;
         if(AppConstants.RESULT_DIALOG_DESCARGAR== resultCode){
             claveUSR=clave;
@@ -431,18 +457,23 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
                 } catch (Exception e) {
                     Log.i("REDIMIR",e.toString());
                 }
-
-
             }
         }else {
             claveUSR="";
-
         }
     }
 
     @Override
     public void onDialogResendClick(DialogFragment dialogFragment) {
+        conteoResend++;
         enviarClaveDinamica();
+    }
+
+    @Override
+    public void onDialogResendEmailClick(DialogFragment dialogFragment) {
+        conteoResend++;
+        enviarClaveDinamicaEmail();
+
     }
 
     @Override
@@ -455,6 +486,13 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
         if (WebUtils.isOnline(ActivityCashless.this)) {
             new AsyncTaskEnviarClave(ActivityCashless.this, responseEnviarClave).execute(docUSR);
         }
+    }
+
+    public void enviarClaveDinamicaEmail(){
+        if (WebUtils.isOnline(ActivityCashless.this)) {
+            new AsyncTaskEnviarClaveCorreo(ActivityCashless.this, responseEnviarClaveCorreo).execute(docUSR);
+        }
+
     }
 
     public void consultarBilleteroCliente(){
@@ -470,11 +508,12 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
         }
     }
 
-    public void dialogClaveDinamica(String clave, int action){
+    public void dialogClaveDinamica(String clave, int action, int numResend){
         DialogFragment dialog = new DialogFragClave();
         Bundle bundle = new Bundle();
         bundle.putString(AppConstants.WebParams.USER_CLAVE_BD, clave);
         bundle.putInt(AppConstants.RESULT_DIALOG,action);
+        bundle.putInt(AppConstants.CONTEO_RESEND,numResend);
         dialog.setArguments(bundle);
         dialog.show(getSupportFragmentManager(),getResources().getString(R.string.act_login_dialog_clave));
     }

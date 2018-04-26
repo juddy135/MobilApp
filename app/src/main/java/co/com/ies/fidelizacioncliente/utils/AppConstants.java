@@ -16,6 +16,8 @@ public class AppConstants {
     public final static int RESULT_DIALOG_CARGAR = 1;
     public final static int RESULT_DIALOG_DESCARGAR = 2;
 
+    public final static String CONTEO_RESEND = "resend";
+    public final static int CONSTANTE_LIMITE_REENVIO_SMS=3;
 
     /**
      * Nombres de las keys de las preferencias
@@ -80,6 +82,7 @@ public class AppConstants {
         public final static String PROTOCOL = "https://";
         public final static String FIDELIZAR_CLIENTE = BASE_URL + "fidelizarClienteXMaquina";
         public final static String REENVIAR_CLAVE = BASE_URL + "reenviarClaveDinamica";
+        public final static String REENVIAR_CLAVE_EMAIL = BASE_URL + "reenviarClaveDinamicaEmail";
         /*CASHLESS*/
         public static final String CARGAR_BILLETERO = "/MobileApp/api/cashless/cargarBilletero";
         public static final String REDIMIR_BILLETERO = "/MobileApp/api/cashless/redimirBilletero";

@@ -8,6 +8,7 @@
     <string name="common_accept">Aceptar</string>
     <string name="common_cancel">Cancelar</string>
     <string name="common_resend">Reenviar</string>
+    <string name="common_resend_email">Reenviar al correo</string>
     <string name="common_si">Sí</string>
     <string name="common_no">Mejor no</string>
     <string name="common_on_hold">En espera</string>

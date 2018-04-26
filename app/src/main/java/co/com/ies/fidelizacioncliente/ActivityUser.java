@@ -36,6 +36,7 @@ import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskAskBilletero;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskCallService;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskCloseSession;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskEnviarClave;
+import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskEnviarClaveCorreo;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskFidelizarCliente;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskUserPoints;
 import co.com.ies.fidelizacioncliente.base.ActivityBase;
@@ -60,8 +61,7 @@ import static android.view.View.GONE;
  * Soliciar atención al cliente
  * Mostrar logo del casino en caso de solo ser usado para bar
  */
-public class ActivityUser extends ActivityBase implements
-        DialogFragConfirm.NoticeDialogActionsListener, DialogFragClave.ClaveDinamicaDialogActionsListener {
+public class ActivityUser extends ActivityBase implements DialogFragConfirm.NoticeDialogActionsListener, DialogFragClave.ClaveDinamicaDialogActionsListener {
 
     private final static int ACTION_GET_ITEM = 1;
     private final static int ACTION_CASHLESS = 2;
@@ -105,7 +105,7 @@ public class ActivityUser extends ActivityBase implements
     private AsyncTaskUserPoints asyncTaskUserPoints;
     private AsyncTaskEnviarClave asyncTaskEnviarClave;
     private AsyncTaskFidelizarCliente asyncTaskFidelizarCliente;
-    private int serviceType;
+    private int serviceType, conteoResend;
     private String url;
     private String casinoCode;
     private String serial;
@@ -121,6 +121,7 @@ public class ActivityUser extends ActivityBase implements
     private AsynTaskValidateUser.AsyncResponse responseValidateUser;
     private AsyncTaskCallService.AsyncResponse responseCallService;
     private AsyncTaskEnviarClave.AsyncResponse responseEnviarClave;
+    private AsyncTaskEnviarClaveCorreo.AsyncResponse responseEnviarClaveCorreo;
     private AsyncTaskAskBilletero.AsyncResponse responseConsultarBilletero;
     private AsyncTaskFidelizarCliente.AsyncResponse responseFidelizarCliente;
     private LetterNumberKeyboard.OnOkeyClickListener keyboardListener;
@@ -204,7 +205,6 @@ public class ActivityUser extends ActivityBase implements
             }
         }else if(resultCode == AppConstants.RESULT_ACTIVITY_BACK){
             serviceAsked=data.getExtras().getBoolean(AppConstants.Generic.SERVICE_ASKED,true);
-            Log.i("USER","estado callService:"+String.valueOf(serviceAsked));
             if (!serviceAsked) {
                 imgCallService.setVisibility(View.INVISIBLE);
             } else {
@@ -359,7 +359,7 @@ public class ActivityUser extends ActivityBase implements
                         }else if (claveEnable){//HAY CLAVE DINAMICA Y EL USO ES DIFERENTE  A CASHLESS
                             //mostrar dialogo para ingresar campo de la clave
                             claveCash=false;
-                            dialogClaveDinamica(codigoEstado[2],AppConstants.RESULT_DIALOG_NONE);
+                            dialogClaveDinamica(codigoEstado[2],AppConstants.RESULT_DIALOG_NONE,0);
                         }
 
                         break;
@@ -430,12 +430,13 @@ public class ActivityUser extends ActivityBase implements
             }
         };
 
+        /*______ENVIAR CLAVE DINAMICA_____*/
         responseEnviarClave= new AsyncTaskEnviarClave.AsyncResponse() {
             @Override
             public void processFinish(String[] codigoEstado) {
                 switch (codigoEstado[0]) {
                     case AppConstants.WebResult.OK:
-                        dialogClaveDinamica(codigoEstado[2],AppConstants.RESULT_DIALOG_NONE);
+                        dialogClaveDinamica(codigoEstado[2],AppConstants.RESULT_DIALOG_NONE,conteoResend);
                         break;
                     case AppConstants.WebResult.FAIL:
                         ALLOW_VIDEO = false;
@@ -444,15 +445,35 @@ public class ActivityUser extends ActivityBase implements
                         break;
                     default:
                         MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),codigoEstado[1]);
-                        //todo borrar para no mostrar video en login; if(!FidelizacionApplication.getInstance().isUserLogged())
                         ALLOW_VIDEO = true;
                         break;
 
                 }
-
-
             }
         };
+
+        /*______ENVIAR CLAVE DINAMICA EMAIL_____*/
+        responseEnviarClaveCorreo= new AsyncTaskEnviarClaveCorreo.AsyncResponse() {
+            @Override
+            public void processFinish(String[] codigoEstado) {
+                switch (codigoEstado[0]) {
+                    case AppConstants.WebResult.OK:
+                        dialogClaveDinamica(codigoEstado[2],AppConstants.RESULT_DIALOG_NONE,conteoResend);
+                        break;
+                    case AppConstants.WebResult.FAIL:
+                        ALLOW_VIDEO = false;
+                        backToValidateService();
+                        Toast.makeText(getApplicationContext(), codigoEstado[1], Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),codigoEstado[1]);
+                        ALLOW_VIDEO = true;
+                        break;
+                }
+            }
+        };
+
+
         /*______Fideliza el cliente_______*/
         responseFidelizarCliente= new AsyncTaskFidelizarCliente.AsyncResponse() {
             @Override
@@ -471,11 +492,13 @@ public class ActivityUser extends ActivityBase implements
                         }
                         break;
                     case AppConstants.WebResult.FAIL:
+                        Log.i("FIDELIZAR","FAIL");
                         ALLOW_VIDEO = false;
                         backToValidateService();
                         Toast.makeText(getApplicationContext(), codigoEstado[1], Toast.LENGTH_LONG).show();
                         break;
                     default:
+                        Log.i("FIDELIZAR",codigoEstado[0]);
                         MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),codigoEstado[1]);
                         //todo borrar para no mostrar video en login; if(!FidelizacionApplication.getInstance().isUserLogged())
                         ALLOW_VIDEO = true;
@@ -551,9 +574,7 @@ public class ActivityUser extends ActivityBase implements
     //______________________________________________________________________________METODOS ON-CLICK
 
     public void onClickMenu(View view) {
-
         accessToSettings();
-
     }
 
     public void onClickCloseSession(View view) {
@@ -952,14 +973,12 @@ public class ActivityUser extends ActivityBase implements
     /*__________CLAVE DINAMICA___________________*/
     @Override
     public void onDialogConfirmClick(DialogFragment dialogFragment, int resultCode, String clave) {
-        Log.i("CLAVE OK","1");
+        conteoResend=0;
         if(claveCash || claveAction==ACTION_CASHLESS){//ingreso a CASHLESS
-            Log.i("CLAVE OK","2");
             claveCliente=clave;
             consultarBilleteroCliente();
             //iniciarCashless();
         }else{//LOGUEO
-            Log.i("CLAVE OK","3");
             claveCliente=clave;
             long doc;
             try {
@@ -976,6 +995,7 @@ public class ActivityUser extends ActivityBase implements
 
     @Override
     public void onDialogResendClick(DialogFragment dialogFragment) {
+        conteoResend++;
         claveCash=false;
         claveCliente="";
         enviarClaveDinamica();
@@ -983,7 +1003,17 @@ public class ActivityUser extends ActivityBase implements
     }
 
     @Override
+    public void onDialogResendEmailClick(DialogFragment dialogFragment) {
+        conteoResend++;
+        claveCash=false;
+        claveCliente="";
+        enviarClaveDinamicaEmail();
+
+    }
+
+    @Override
     public void onDialogCancelClick(DialogFragment dialogFragment) {
+        conteoResend=0;
         //Solo se realiza cuando se esta realizando el logueo
         if(claveAction==ACTION_CLOSE_SESSION){
             ALLOW_VIDEO = false;
@@ -994,11 +1024,12 @@ public class ActivityUser extends ActivityBase implements
 
     /*________________________________MODAL CLAVE DINAMICA___________*/
 
-    public void dialogClaveDinamica(String clave, int action){
+    public void dialogClaveDinamica(String clave, int action, int numResend){
         DialogFragment dialog = new DialogFragClave();
         Bundle bundle = new Bundle();
         bundle.putString(AppConstants.WebParams.USER_CLAVE_BD, clave);
         bundle.putInt(AppConstants.RESULT_DIALOG,action);
+        bundle.putInt(AppConstants.CONTEO_RESEND,numResend);
         dialog.setArguments(bundle);
         dialog.show(getSupportFragmentManager(),getResources().getString(R.string.act_login_dialog_clave));
     }
@@ -1015,8 +1046,19 @@ public class ActivityUser extends ActivityBase implements
         }
     }
 
+    public void enviarClaveDinamicaEmail(){
+        long doc;
+        try {
+            doc = numberFormatter.parse(FidelizacionApplication.getInstance().getUserDoc()).longValue();
+            if (WebUtils.isOnline(ActivityUser.this)) {
+                new AsyncTaskEnviarClaveCorreo(ActivityUser.this, responseEnviarClaveCorreo).execute(String.valueOf(doc));
+            }
+        } catch (ParseException e) {
+            MsgUtils.handleException(e);
+        }
+    }
+
     public void consultarBilleteroCliente(){
-        Log.i("BILLETERO","ok");
         if (WebUtils.isOnline(ActivityUser.this)) {
             new AsyncTaskAskBilletero(ActivityUser.this,responseConsultarBilletero).execute(FidelizacionApplication.getInstance().getUserDoc(), claveCliente);
         }
