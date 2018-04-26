@@ -272,6 +272,7 @@ public class AppConstants {
         public static final String SERVICE_ASKED="callservice";
         public static final String CLAVE_CLIENTE="claveCliente";
         public static final String VALOR_BILLETERO="valorBilletero";
+        public static final String CLAVE_BILLETERA="claveChange";
 
     }
 

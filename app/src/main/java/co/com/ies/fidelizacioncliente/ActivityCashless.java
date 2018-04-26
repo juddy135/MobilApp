@@ -353,6 +353,7 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
     public void onClickBack(View view) {
         Intent i= new Intent();
         i.putExtra(AppConstants.Generic.SERVICE_ASKED, serviceAsked);
+        i.putExtra(AppConstants.Generic.CLAVE_BILLETERA,claveUSR);
         setResult(AppConstants.RESULT_ACTIVITY_BACK,i);
         finish();
     }

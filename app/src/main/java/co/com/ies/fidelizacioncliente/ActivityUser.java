@@ -205,6 +205,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
             }
         }else if(resultCode == AppConstants.RESULT_ACTIVITY_BACK){
             serviceAsked=data.getExtras().getBoolean(AppConstants.Generic.SERVICE_ASKED,true);
+            claveCliente=data.getExtras().getString(AppConstants.Generic.CLAVE_BILLETERA,"0");
             if (!serviceAsked) {
                 imgCallService.setVisibility(View.INVISIBLE);
             } else {
@@ -604,8 +605,10 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
         claveAction=ACTION_CASHLESS;
         if(claveEnable){
             ALLOW_VIDEO = false;
-            claveCash=true;
-            enviarClaveDinamica();
+            consultarBilleteroCliente();
+
+            /*claveCash=true;
+            enviarClaveDinamica();*/
         }else{
             claveCash=false;
             MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),getString(R.string.common_no_clave));
@@ -972,11 +975,13 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
     @Override
     public void onDialogConfirmClick(DialogFragment dialogFragment, int resultCode, String clave) {
         conteoResend=0;
-        if(claveCash || claveAction==ACTION_CASHLESS){//ingreso a CASHLESS
-            claveCliente=clave;
-            consultarBilleteroCliente();
-            //iniciarCashless();
-        }else{//LOGUEO
+//        if(claveCash || claveAction==ACTION_CASHLESS){//ingreso a CASHLESS
+//            claveCliente=clave;
+//            consultarBilleteroCliente();
+//            //iniciarCashless();
+//        }else{
+
+        //LOGUEO
             claveCliente=clave;
             long doc;
             try {
@@ -987,7 +992,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
             } catch (ParseException e) {
                 MsgUtils.handleException(e);
             }
-        }
+ //       }
 
     }
 
