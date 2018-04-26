@@ -492,13 +492,11 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
                         }
                         break;
                     case AppConstants.WebResult.FAIL:
-                        Log.i("FIDELIZAR","FAIL");
                         ALLOW_VIDEO = false;
                         backToValidateService();
                         Toast.makeText(getApplicationContext(), codigoEstado[1], Toast.LENGTH_LONG).show();
                         break;
                     default:
-                        Log.i("FIDELIZAR",codigoEstado[0]);
                         MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),codigoEstado[1]);
                         //todo borrar para no mostrar video en login; if(!FidelizacionApplication.getInstance().isUserLogged())
                         ALLOW_VIDEO = true;

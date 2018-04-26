@@ -236,7 +236,6 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
                             DecimalFormat dF = new DecimalFormat("0.00");
                             Number num = dF.parse(valorBilletero);
                             txtBilletero.setText(numberFormatter.format(num.doubleValue()));
-                            Log.i("CARGAR",valorBilletero);
                         } catch (Exception e) {
                             Log.i("CARGAR",e.toString());
                         }
@@ -453,7 +452,6 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
                     Number num = dF.parse(valorBilletero);
                     String entero=String.valueOf(num.intValue());
                     new AsyncTaskRedimirBilletero(ActivityCashless.this, responseRedimirBilletero).execute(docUSR, claveUSR, entero);
-                    Log.i("REDIMIR",entero);
                 } catch (Exception e) {
                     Log.i("REDIMIR",e.toString());
                 }
