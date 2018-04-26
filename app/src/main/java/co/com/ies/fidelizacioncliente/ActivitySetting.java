@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
@@ -70,8 +71,7 @@ public class ActivitySetting extends ActivityBase implements DialogFragConfirm.N
     private SharedPreferences preferences = null;
     private String erMsgMissingField = null;
     private String erMsgMissingSelec = null;
-    private String erMsgBadFormat = null;
-    private AdapterSpinnerSimple adapterUso;
+    //private String erMsgBadFormat = null;
     private AdapterSpinnerGeneric adapterCasinos;
     private AdapterSpinnerGeneric adapterMachines;
     private ArrayList<GenericItem> listCasinos;
@@ -122,8 +122,6 @@ public class ActivitySetting extends ActivityBase implements DialogFragConfirm.N
 
     /**
      * metodo para cambiar el tipo de letra
-     *
-     * @param newBase
      */
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -138,8 +136,7 @@ public class ActivitySetting extends ActivityBase implements DialogFragConfirm.N
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case PERMISSIONS_REQUEST_WRITE_EXT: {
                 // If request is cancelled, the result arrays are empty.
@@ -177,7 +174,7 @@ public class ActivitySetting extends ActivityBase implements DialogFragConfirm.N
 
                     }
                 }
-                return;
+
             }
             // other 'case' lines to check for other
             // permissions this app might request
@@ -231,7 +228,7 @@ public class ActivitySetting extends ActivityBase implements DialogFragConfirm.N
             startTimer();
         }
 
-        adapterUso = new AdapterSpinnerSimple(this, getResources().getStringArray(R.array.usos_app));
+        AdapterSpinnerSimple adapterUso = new AdapterSpinnerSimple(this, getResources().getStringArray(R.array.usos_app));
         spnUso.setAdapter(adapterUso);
 
         listCasinos = managerStandard.getAllCassinos(this);
@@ -242,7 +239,7 @@ public class ActivitySetting extends ActivityBase implements DialogFragConfirm.N
         adapterMachines = new AdapterSpinnerGeneric(this, listMachines);
         spnMachine.setAdapter(adapterMachines);
 
-        erMsgBadFormat = getString(R.string.common_wrong_format);
+        //erMsgBadFormat = getString(R.string.common_wrong_format);
         erMsgMissingField = getString(R.string.common_missing_field);
         erMsgMissingSelec = getString(R.string.common_missing_selection);
     }
@@ -338,21 +335,19 @@ public class ActivitySetting extends ActivityBase implements DialogFragConfirm.N
         failValitations += FormUtils.validarSpinnerStandard(spnMachine, erMsgMissingSelec);
 
 
-        return failValitations == 0 ? true : false;
+        return failValitations == 0;
 
     }
 
     /**
      * datos minimos necesarios para consultar casinos y maquinas
-     *
-     * @return
      */
     private boolean validateFormSinc() {
         int failValitations = 0;
         failValitations += FormUtils.validarEditTextStandard(edtIp, erMsgMissingField);
         failValitations += FormUtils.validarEditTextStandard(edtServPass, erMsgMissingField);
         failValitations += FormUtils.validarEditTextStandard(edtServUsr, erMsgMissingField);
-        return failValitations == 0 ? true : false;
+        return failValitations == 0;
     }
 
 
@@ -477,11 +472,12 @@ public class ActivitySetting extends ActivityBase implements DialogFragConfirm.N
 
         try {
             File folderImages = getExternalFilesDir(null);
+            assert folderImages != null;
             if (folderImages.exists()) {
                 File[] files = folderImages.listFiles();
-                int sizeImages = files.length;
-                for (int i = 0; i < sizeImages; i++) {
-                    files[i].delete();
+                //int sizeImages = files.length;
+                for (File file : files) {
+                    file.delete();
                 }
             }
         } catch (Exception e) {
@@ -493,9 +489,9 @@ public class ActivitySetting extends ActivityBase implements DialogFragConfirm.N
                 File folderCrash = new File(Environment.getExternalStorageDirectory(), AppConstants.FileExtension.CRASH_LOG);
                 if (folderCrash.exists()) {
                     File[] files = folderCrash.listFiles();
-                    int sizeImages = files.length;
-                    for (int i = 0; i < sizeImages; i++) {
-                        files[i].delete();
+                    //int sizeImages = files.length;
+                    for (File file : files) {
+                        file.delete();
                     }
                 }
             }
