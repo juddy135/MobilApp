@@ -54,25 +54,21 @@ public class ActivityBarList extends ActivityBase implements
     private final int ACTION_CANCEL_ITEM = 3;
     private final int ACTION_RECEIVED_ITEM = 4;
     private int currentAction;
-    private boolean isRunningTimer = false;
     public static final String RESULT = "result";
     private static BarItem barItemProcess = null;
-    private RecyclerView rvBarItems;
-    private RecyclerView rvCategories;
+    private RecyclerView rvBarItems,rvCategories;
     //  private TextView txtEmpty;
     private TextView txtPoints;
     private AdapterListBarItems adapterListBarItems;
     private ArrayList<String> listCategories;
     private AdapterCategories adapterCategories;
-    private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.LayoutManager layoutManagerCategories;
+    private RecyclerView.LayoutManager layoutManager, layoutManagerCategories;
     private BarInfo barInfo;
     private TimerTask task;
     private Timer timer;
     private boolean isInsideCategory = false;
     private String filterCategory = "";
     String finalPoints ="";
-    private Long redeemedPoints=(long) 0;
     private ManagerStandard managerStandard;
     private int timeToClose;
 
@@ -172,7 +168,7 @@ public class ActivityBarList extends ActivityBase implements
     @Override
     public void onBuyItem(BarItem barItem, int position) {
         startTimer();
-        this.barItemProcess = barItem;
+        barItemProcess = barItem;
         currentAction = ACTION_BUY_ITEM;
         MsgUtils.showSConfirmDialog(getSupportFragmentManager(),
                 getString(R.string.common_alert), getString(R.string.act_bar_list_buy_message, barItem.getName()));
@@ -181,7 +177,7 @@ public class ActivityBarList extends ActivityBase implements
     @Override
     public void onRedeemItem(BarItem barItem, int position) {
         startTimer();
-        this.barItemProcess = barItem;
+        barItemProcess = barItem;
         currentAction = ACTION_REDEEM_ITEM;
         MsgUtils.showSConfirmDialog(getSupportFragmentManager(),
                 getString(R.string.common_alert), getString(R.string.act_bar_list_redeem_message, barItem.getName()));
@@ -190,7 +186,7 @@ public class ActivityBarList extends ActivityBase implements
     @Override
     public void onCancelOrder(BarItem barItem, int position) {
         startTimer();
-        this.barItemProcess = barItem;
+        barItemProcess = barItem;
         currentAction = ACTION_CANCEL_ITEM;
         MsgUtils.showSConfirmDialog(getSupportFragmentManager(),
                 getString(R.string.common_alert), getString(R.string.act_bar_list_cancel_message, barItem.getName()));
@@ -199,7 +195,7 @@ public class ActivityBarList extends ActivityBase implements
     @Override
     public void onOrderReceived(BarItem barItem, int position) {
         startTimer();
-        this.barItemProcess = barItem;
+        barItemProcess = barItem;
         currentAction = ACTION_RECEIVED_ITEM;
         MsgUtils.showSConfirmDialog(getSupportFragmentManager(),
                 getString(R.string.common_alert), getString(R.string.act_bar_list_received_message, barItem.getName()));
@@ -219,129 +215,103 @@ public class ActivityBarList extends ActivityBase implements
     @Override
     public void barInfoFinish(BarInfo barInfo) {
         this.barInfo = barInfo;
-        if (barInfo.getResult().equals(WebResult.OK)) {
+        switch (barInfo.getResult()) {
+            case WebResult.OK:
+                barInfo.cleanList();
+                if (managerStandard.getBarItemDetails(this, barInfo.getListAvaliableItems())) {
 
-            barInfo.cleanList();
-            if (managerStandard.getBarItemDetails(this, barInfo.getListAvaliableItems())) {
+                    if (!barInfo.getListAvaliableItems().isEmpty()) {
+                        Collections.sort(barInfo.getListAvaliableItems(), new Comparator<BarItem>() {
+                            @Override
+                            public int compare(BarItem lhs, BarItem rhs) {
+                                int compItems = 0;
 
-                if (!barInfo.getListAvaliableItems().isEmpty()) {
-                    Collections.sort(barInfo.getListAvaliableItems(), new Comparator<BarItem>() {
-                        @Override
-                        public int compare(BarItem lhs, BarItem rhs) {
-                            int compItems = 0;
-
-                            if ((lhs.getOrderState() != null && rhs.getOrderState() == null)) {
-                                compItems = -1;
-                            } else if ((lhs.getOrderState() == null && rhs.getOrderState() != null)) {
-                                compItems = 1;
-                            } /*else if ((lhs.getOrderState() == null && rhs.getOrderState() == null) ||
+                                if ((lhs.getOrderState() != null && rhs.getOrderState() == null)) {
+                                    compItems = -1;
+                                } else if ((lhs.getOrderState() == null && rhs.getOrderState() != null)) {
+                                    compItems = 1;
+                                } /*else if ((lhs.getOrderState() == null && rhs.getOrderState() == null) ||
                                     (lhs.getOrderState() != null && rhs.getOrderState() != null)) {
                                 compItems = 0;
                             }*/
-                            if (compItems == 0) {
-                                if (lhs.getOrderState() != null && rhs.getOrderState() != null) {
-                                    if (lhs.getOrderState().getState().equals(AppConstants.OrderState.ON_WAY)
-                                            && rhs.getOrderState().getState().equals(AppConstants.OrderState.ON_QUEUE)) {
-                                        compItems = -1;
-                                    } else if (lhs.getOrderState().getState().equals(AppConstants.OrderState.ON_QUEUE)
-                                            && rhs.getOrderState().getState().equals(AppConstants.OrderState.ON_WAY)) {
-                                        compItems = 1;
+                                if (compItems == 0) {
+                                    if (lhs.getOrderState() != null && rhs.getOrderState() != null) {
+                                        if (lhs.getOrderState().getState().equals(AppConstants.OrderState.ON_WAY)
+                                                && rhs.getOrderState().getState().equals(AppConstants.OrderState.ON_QUEUE)) {
+                                            compItems = -1;
+                                        } else if (lhs.getOrderState().getState().equals(AppConstants.OrderState.ON_QUEUE)
+                                                && rhs.getOrderState().getState().equals(AppConstants.OrderState.ON_WAY)) {
+                                            compItems = 1;
+                                        }
                                     }
                                 }
+                                return compItems;
                             }
-                            return compItems;
-                        }
-                    });
-                }
+                        });
+                    }
 
 
-                listCategories = managerStandard.getItemCategories(this);
-                adapterCategories = new AdapterCategories(this, listCategories, this);
-                rvCategories.setAdapter(adapterCategories);
+                    listCategories = managerStandard.getItemCategories(this);
+                    adapterCategories = new AdapterCategories(this, listCategories, this);
+                    rvCategories.setAdapter(adapterCategories);
 
-                //Verifica que items fueron redimidos para descontar el valor de los puntos
-                redeemedPoints =(long) 0;//inicializar puntos redimidos
-                if(!StringUtils.isNullOrEmpty(FidelizacionApplication.getInstance().getUserDoc())){
-                    for(BarItem bi:barInfo.getListAvaliableItems()){
-                        if(!StringUtils.isNullOrEmpty(bi.getPayment())){
-                            if(bi.getPayment().equals(AppConstants.Generic.PAYMENT_POINTS)){//redimido
-                                redeemedPoints+=Long.parseLong(bi.getPoints());
+                    //Verifica que items fueron redimidos para descontar el valor de los puntos
+                    Long redeemedPoints = (long) 0;//inicializar puntos redimidos
+                    if (!StringUtils.isNullOrEmpty(FidelizacionApplication.getInstance().getUserDoc())) {
+                        for (BarItem bi : barInfo.getListAvaliableItems()) {
+                            if (!StringUtils.isNullOrEmpty(bi.getPayment())) {
+                                if (bi.getPayment().equals(AppConstants.Generic.PAYMENT_POINTS)) {//redimido
+                                    redeemedPoints += Long.parseLong(bi.getPoints());
+                                }
                             }
                         }
-                    }
-                    Long total=Long.parseLong(barInfo.getAvaliablePoints())-redeemedPoints;
-                    finalPoints=String.valueOf(total);
-                }else{
-                    finalPoints=barInfo.getAvaliablePoints();
-                }
-
-
-                Log.i("TAG_COMPARE","   Redimidos: "+String.valueOf(redeemedPoints)+" Disponibles: "+barInfo.getAvaliablePoints());
-                Log.i("TAG_TOTAL","     Total: "+finalPoints);
-
-                List<BarItem> aux=barInfo.getListAvaliableItems();
-                boolean userLog=!StringUtils.isNullOrEmpty(FidelizacionApplication.getInstance().getUserDoc());
-                for(BarItem bi:aux){
-                    Log.i("LISTA","--"+bi.getName());
-                    if (bi.getOrderState() == null) {//Si es un item que se puede comprar/redimir
-                        Log.i("LISTA","Se puede comprar/redimir");
-                    }else{
-                        Log.i("LISTA","Con pedido");
+                        Long total = Long.parseLong(barInfo.getAvaliablePoints()) - redeemedPoints;
+                        finalPoints = String.valueOf(total);
+                    } else {
+                        finalPoints = barInfo.getAvaliablePoints();
                     }
 
-                    if (StringUtils.isNullOrEmpty(bi.getPoints()) || /*item puntos vacio*/
-                            !userLog || /*usuario no logueado*/
-                            (!StringUtils.isNullOrEmpty(bi.getPoints())/*item puntos*/ && userLog /*usuario logueado*/
-                                    && Integer.valueOf(finalPoints) < Integer.valueOf(bi.getPoints())  /*item puntos > puntos usuario*/
-                            )
-                            ) {
-                        Log.i("LISTA","NO REDIMIR");
-                    }else{
-                        Log.i("LISTA","REDIMIR");
 
-                    }
+                    Log.i("TAG_COMPARE", "   Redimidos: " + String.valueOf(redeemedPoints) + " Disponibles: " + barInfo.getAvaliablePoints());
+                    Log.i("TAG_TOTAL", "     Total: " + finalPoints);
 
-                    if (StringUtils.isNullOrEmpty(bi.getPrice())) {
-                        Log.i("LISTA","NO COMPRAR");
-                    }
-                    Log.i("LISTA","--------------------");
-
+                    adapterListBarItems = new AdapterListBarItems(this, this, barInfo.getListAvaliableItems(),
+                            !StringUtils.isNullOrEmpty(FidelizacionApplication.getInstance().getUserDoc()), finalPoints);
+                    if (!filterCategory.isEmpty())
+                        adapterListBarItems.filter(filterCategory);
+                    rvBarItems.setAdapter(adapterListBarItems);
 
                 }
 
+                if (barInfo.getAvaliablePoints() != null) {
+                    txtPoints.setText(getString(R.string.act_bar_points, barInfo.getAvaliablePoints()));
+                    txtPoints.setVisibility(View.VISIBLE);
+                }
+                startTimer();
 
-                adapterListBarItems = new AdapterListBarItems(this, this, barInfo.getListAvaliableItems(),
-                        !StringUtils.isNullOrEmpty(FidelizacionApplication.getInstance().getUserDoc()),finalPoints );
-                if (!filterCategory.isEmpty())
-                    adapterListBarItems.filter(filterCategory);
-                rvBarItems.setAdapter(adapterListBarItems);
-
-            }
-
-            if (barInfo.getAvaliablePoints() != null) {
-                txtPoints.setText(getString(R.string.act_bar_points, barInfo.getAvaliablePoints()));
-                txtPoints.setVisibility(View.VISIBLE);
-            }
-            startTimer();
-
-        } else if (barInfo.getResult().equals(WebResult.SESSION_EXPIRED)) {
-            closeOnSessionExpired();
-        } else if (barInfo.getResult().equals(WebResult.FAIL)) {
-            backToValidateService();
-        } else {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(RESULT, barInfo.getResult());
-            Intent intent = new Intent();
-            intent.putExtras(bundle);
-            setResult(RESULT_OK, intent);
-            finish();
+                break;
+            case WebResult.SESSION_EXPIRED:
+                closeOnSessionExpired();
+                break;
+            case WebResult.FAIL:
+                backToValidateService();
+                break;
+            default:
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(RESULT, barInfo.getResult());
+                Intent intent = new Intent();
+                intent.putExtras(bundle);
+                setResult(RESULT_OK, intent);
+                finish();
+                break;
         }
     }
 
     @Override
     public void askItemFinish(String codigoEstado, String process, String idItem) {
 
-        if (codigoEstado.equals(WebResult.OK)) {
+        switch (codigoEstado) {
+            case WebResult.OK:
             /*switch (process) {
                 case WebServs.ORDER_REDEEM:
                     barItemProcess.setOrderState(new OrderState());
@@ -358,13 +328,17 @@ public class ActivityBarList extends ActivityBase implements
             }
 
             adapterListBarItems.notifyDataSetChanged();*/
-            new AsyncTaskBarInfo(this, this).execute();
-        } else if (codigoEstado.equals(WebResult.SESSION_EXPIRED)) {
-            closeOnSessionExpired();
-        } else if (codigoEstado.equals(WebResult.FAIL)) {
-            backToValidateService();
-        } else {
-            MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert), getString(R.string.act_bar_fail_request));
+                new AsyncTaskBarInfo(this, this).execute();
+                break;
+            case WebResult.SESSION_EXPIRED:
+                closeOnSessionExpired();
+                break;
+            case WebResult.FAIL:
+                backToValidateService();
+                break;
+            default:
+                MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert), getString(R.string.act_bar_fail_request));
+                break;
         }
     }
 
@@ -379,9 +353,9 @@ public class ActivityBarList extends ActivityBase implements
         }
     }
 
-    public void onClickSearch(View view) {
+    /*public void onClickSearch(View view) {
         MsgUtils.showSearchDialog(getSupportFragmentManager(), listCategories);
-    }
+    }*/
 
     private void obtenerComponentes() {
         txtPoints = (TextView) findViewById(R.id.act_bar_txt_points);
