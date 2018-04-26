@@ -177,6 +177,7 @@ public class AdapterListBarItems extends RecyclerView.Adapter<AdapterListBarItem
                     setButtonDisable(viewHolderBar.btnRedeem);
                 }else{
                     viewHolderBar.btnRedeem.setVisibility(View.VISIBLE);
+                    viewHolderBar.btnRedeem.setEnabled(true);
                 }
 
                 if (StringUtils.isNullOrEmpty(barItem.getPrice())) {
@@ -203,12 +204,13 @@ public class AdapterListBarItems extends RecyclerView.Adapter<AdapterListBarItem
      */
     private void setButtonDisable(Button button) {
         button.setEnabled(false);
-
+/*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             button.setTextColor(context.getColor(R.color.text_disable));
         } else {
             button.setTextColor(context.getResources().getColor(R.color.text_disable));
         }
+*/
     }
 
     /**

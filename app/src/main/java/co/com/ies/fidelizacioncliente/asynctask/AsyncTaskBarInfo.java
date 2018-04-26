@@ -48,12 +48,12 @@ import co.com.ies.fidelizacioncliente.web.CommonServices;
  * Peticiones pendientes, en caso de que el usuario este logueado se valida respecto al documento del usuario si no,
  * solo con el serial de la máquina
  */
-public class AsyntaskBarInfo extends AsyncTask<Void, Void, BarInfo> {
+public class AsyncTaskBarInfo extends AsyncTask<Void, Void, BarInfo> {
 
 
     private ProgressDialog progressDialog;
     private Context context;
-    private AsyntaskBarInfo.AsyncResponse binder = null;
+    private AsyncTaskBarInfo.AsyncResponse binder = null;
     private SharedPreferences preferences;
 
     public interface AsyncResponse {
@@ -62,7 +62,7 @@ public class AsyntaskBarInfo extends AsyncTask<Void, Void, BarInfo> {
 
     }
 
-    public AsyntaskBarInfo(Context context, AsyntaskBarInfo.AsyncResponse asyncResponse) {
+    public AsyncTaskBarInfo(Context context, AsyncTaskBarInfo.AsyncResponse asyncResponse) {
 
         this.context = context;
         this.binder = asyncResponse;

@@ -21,7 +21,7 @@ import java.util.TimerTask;
 
 import co.com.ies.fidelizacioncliente.application.FidelizacionApplication;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskAskBarItem;
-import co.com.ies.fidelizacioncliente.asynctask.AsyntaskBarInfo;
+import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskBarInfo;
 import co.com.ies.fidelizacioncliente.base.ActivityBase;
 import co.com.ies.fidelizacioncliente.custom.list.AdapterCategories;
 import co.com.ies.fidelizacioncliente.custom.list.AdapterListBarItems;
@@ -44,7 +44,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class ActivityBarList extends ActivityBase implements
         DialogFragConfirm.NoticeDialogActionsListener,
         DialogFragSearch.OnSearchListener,
-        AsyntaskBarInfo.AsyncResponse,
+        AsyncTaskBarInfo.AsyncResponse,
         AsyncTaskAskBarItem.AsyncResponse,
         AdapterListBarItems.OnBarItemAction,
         AdapterCategories.ListenerItemClick {
@@ -110,7 +110,7 @@ public class ActivityBarList extends ActivityBase implements
         rvCategories.addItemDecoration(itemDecoration);
 
 
-        new AsyntaskBarInfo(this, this).execute();
+        new AsyncTaskBarInfo(this, this).execute();
     }
 
     @Override
@@ -122,7 +122,6 @@ public class ActivityBarList extends ActivityBase implements
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-
     }
 
     @Override
@@ -224,6 +223,7 @@ public class ActivityBarList extends ActivityBase implements
 
             barInfo.cleanList();
             if (managerStandard.getBarItemDetails(this, barInfo.getListAvaliableItems())) {
+
                 if (!barInfo.getListAvaliableItems().isEmpty()) {
                     Collections.sort(barInfo.getListAvaliableItems(), new Comparator<BarItem>() {
                         @Override
@@ -254,6 +254,7 @@ public class ActivityBarList extends ActivityBase implements
                     });
                 }
 
+
                 listCategories = managerStandard.getItemCategories(this);
                 adapterCategories = new AdapterCategories(this, listCategories, this);
                 rvCategories.setAdapter(adapterCategories);
@@ -277,6 +278,37 @@ public class ActivityBarList extends ActivityBase implements
 
                 Log.i("TAG_COMPARE","   Redimidos: "+String.valueOf(redeemedPoints)+" Disponibles: "+barInfo.getAvaliablePoints());
                 Log.i("TAG_TOTAL","     Total: "+finalPoints);
+
+                List<BarItem> aux=barInfo.getListAvaliableItems();
+                boolean userLog=!StringUtils.isNullOrEmpty(FidelizacionApplication.getInstance().getUserDoc());
+                for(BarItem bi:aux){
+                    Log.i("LISTA","--"+bi.getName());
+                    if (bi.getOrderState() == null) {//Si es un item que se puede comprar/redimir
+                        Log.i("LISTA","Se puede comprar/redimir");
+                    }else{
+                        Log.i("LISTA","Con pedido");
+                    }
+
+                    if (StringUtils.isNullOrEmpty(bi.getPoints()) || /*item puntos vacio*/
+                            !userLog || /*usuario no logueado*/
+                            (!StringUtils.isNullOrEmpty(bi.getPoints())/*item puntos*/ && userLog /*usuario logueado*/
+                                    && Integer.valueOf(finalPoints) < Integer.valueOf(bi.getPoints())  /*item puntos > puntos usuario*/
+                            )
+                            ) {
+                        Log.i("LISTA","NO REDIMIR");
+                    }else{
+                        Log.i("LISTA","REDIMIR");
+
+                    }
+
+                    if (StringUtils.isNullOrEmpty(bi.getPrice())) {
+                        Log.i("LISTA","NO COMPRAR");
+                    }
+                    Log.i("LISTA","--------------------");
+
+
+                }
+
 
                 adapterListBarItems = new AdapterListBarItems(this, this, barInfo.getListAvaliableItems(),
                         !StringUtils.isNullOrEmpty(FidelizacionApplication.getInstance().getUserDoc()),finalPoints );
@@ -326,7 +358,7 @@ public class ActivityBarList extends ActivityBase implements
             }
 
             adapterListBarItems.notifyDataSetChanged();*/
-            new AsyntaskBarInfo(this, this).execute();
+            new AsyncTaskBarInfo(this, this).execute();
         } else if (codigoEstado.equals(WebResult.SESSION_EXPIRED)) {
             closeOnSessionExpired();
         } else if (codigoEstado.equals(WebResult.FAIL)) {
@@ -348,7 +380,6 @@ public class ActivityBarList extends ActivityBase implements
     }
 
     public void onClickSearch(View view) {
-
         MsgUtils.showSearchDialog(getSupportFragmentManager(), listCategories);
     }
 
@@ -358,7 +389,6 @@ public class ActivityBarList extends ActivityBase implements
         rvCategories = (RecyclerView) findViewById(R.id.act_bar_list_categories);
         // txtEmpty = (TextView) findViewById(R.id.act_bar_txt_empty);
     }
-
 
     private void backToUser() {
         if (barInfo.pendingOrders()) {
