@@ -29,7 +29,6 @@ import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskPagarPremio;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskRedimirBilletero;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskVerPremios;
 import co.com.ies.fidelizacioncliente.base.ActivityBase;
-import co.com.ies.fidelizacioncliente.dialog.DialogFragAlert;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragClave;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragConfirm;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragOnlyConfirm;
@@ -62,7 +61,6 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
 
     private SharedPreferences preferences;
     private NumberFormat numberFormatter;
-    private Locale locale;
     private String docUSR,claveUSR, valorBilletero="0", valorPremio="0",valorOldBilletero="0.0",valorActBilletero="0.0";
     private int action,actionConfirm, conteoResend;
     private boolean DEVOLVERDINERO=false;
@@ -72,7 +70,7 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cashless);
 
-        locale = new Locale("es", "CO");
+        Locale locale = new Locale("es", "CO");
         numberFormatter = NumberFormat.getNumberInstance(locale);
 
         numberFormatter.setMaximumFractionDigits(2);
@@ -291,7 +289,7 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
                     default:
                         DEVOLVERDINERO=true;
                         String mensajeMostrar=codigoEstado[1];
-                        if(codigoEstado[0]==AppConstants.WebResult.MAQUINA_BLOQUEADA){
+                        if(codigoEstado[0].equals(AppConstants.WebResult.MAQUINA_BLOQUEADA)){
                             mensajeMostrar=getString(R.string.common_error_no_carga_maquina);
                         }
                         showOnlyConfirmDialog(getSupportFragmentManager(), getString(R.string.common_alert),mensajeMostrar);
@@ -434,13 +432,9 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
         if(AppConstants.RESULT_DIALOG_DESCARGAR== resultCode){
             claveUSR=clave;
             if(txtBilletero.getText().toString().isEmpty()){
-                Log.i("BILLETERA","VACIA");
                 valorActBilletero="0.00";
             }else{
-                Log.i("BILLETERA","FULL");
                 valorActBilletero=txtBilletero.getText().toString();
-                Log.i("BILLETERA",valorActBilletero);
-
             }
             if (WebUtils.isOnline(ActivityCashless.this)) {
                 new AsyncTaskVerPremios(ActivityCashless.this, responseVerPremios).execute();
@@ -521,9 +515,6 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
     /**
      * Ventana de dialogo con solo la opcion de confirmar
      *
-     * @param supportFragManager
-     * @param titulo
-     * @param mensaje
      */
     public static void showOnlyConfirmDialog(FragmentManager supportFragManager, @NonNull String titulo, String mensaje) {
 
