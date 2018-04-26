@@ -1,9 +1,11 @@
 package co.com.ies.fidelizacioncliente.asynctask;
 
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,27 +21,32 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import co.com.ies.fidelizacioncliente.ActivityCashless;
 import co.com.ies.fidelizacioncliente.R;
 import co.com.ies.fidelizacioncliente.application.FidelizacionApplication;
-import co.com.ies.fidelizacioncliente.entity.ModificarBilleteroBody;
+import co.com.ies.fidelizacioncliente.entity.EnviarClaveBody;
 import co.com.ies.fidelizacioncliente.utils.AppConstants;
 import co.com.ies.fidelizacioncliente.utils.MsgUtils;
 import co.com.ies.fidelizacioncliente.utils.SharedPrefUtils;
 import co.com.ies.fidelizacioncliente.utils.WebUtils;
 
-public class AsyncTaskCargarBilletero  extends AsyncTask<String, Void, String[]> {
+/**
+ * Permite enviar la clave dinamica como mensaje de texto al cliente
+ * se muestra una ventana de dialogo mientras se ejecuta el proceso en background
+ *
+ * Created by juddy on 25/04/2018.
+ */
+public class AsyncTaskEnviarClaveCorreo extends AsyncTask<String, Void, String[]> {
 
     private ProgressDialog progressDialog;
     private Context context;
-    private AsyncTaskCargarBilletero.AsyncResponse binder = null;
+    private AsyncTaskEnviarClaveCorreo.AsyncResponse binder = null;
     private SharedPreferences preferences;
 
     public interface AsyncResponse {
         void processFinish(String[] codigoEstado);
     }
 
-    public AsyncTaskCargarBilletero (Context context, AsyncResponse asyncResponse) {
+    public AsyncTaskEnviarClaveCorreo(Context context, AsyncResponse asyncResponse) {
         this.context = context;
         this.binder = asyncResponse;
         preferences = SharedPrefUtils.getSharedPreference(context, AppConstants.Prefs.SERVICE_PREF);
@@ -49,25 +56,24 @@ public class AsyncTaskCargarBilletero  extends AsyncTask<String, Void, String[]>
     protected void onPreExecute() {
         progressDialog = new ProgressDialog(context);
         progressDialog.setCancelable(false);
-        progressDialog.setMessage(context.getString(R.string.act_login_esperando));
+        progressDialog.setMessage(context.getString(R.string.act_login_resending_clave));
         progressDialog.show();
         super.onPreExecute();
     }
 
     @Override
     protected String[] doInBackground(String... params) {
+
         String docUsr = params[0];
-        String claveUsr = params[1];
-        String valor = params[2];
-        String serial=params[3];
-        String[] result = new String[]{AppConstants.WebResult.FAIL, context.getString(R.string.common_fail), "0.00"};
-        String service = AppConstants.WebServs.CARGAR_BILLETERO;
+        String[] result = new String[]{AppConstants.WebResult.FAIL, context.getString(R.string.common_fail),"0"};
+        String service = AppConstants.WebServs.REENVIAR_CLAVE_EMAIL;
         StringBuilder response = new StringBuilder();
 
         HttpsURLConnection connection = null;
         String targetUrl = AppConstants.WebServs.PROTOCOL + preferences.getString(AppConstants.Prefs.URL, "") + service;
 
         try {
+
             String cookie = WebUtils.loginService(preferences.getString(AppConstants.Prefs.URL, ""),
                     preferences.getString(AppConstants.Prefs.SERV_USR, ""),
                     preferences.getString(AppConstants.Prefs.SERV_PASS, ""));
@@ -75,10 +81,9 @@ public class AsyncTaskCargarBilletero  extends AsyncTask<String, Void, String[]>
                 FidelizacionApplication.getInstance().setCookie(cookie);
             }
 
-            //Parametro Body
-            ModificarBilleteroBody body= new ModificarBilleteroBody( preferences.getString(AppConstants.Prefs.SERV_USR, ""),
-                    preferences.getString(AppConstants.Prefs.ID_CASINO, ""),docUsr,valor,claveUsr);
-            body.setSerial(serial);
+            //PARAMETROS en BODY
+            EnviarClaveBody body=new EnviarClaveBody(preferences.getString(AppConstants.Prefs.SERV_USR,""),docUsr);
+            Log.i("ASYNCTASK","BODY");
 
             GsonBuilder gsonBuilder = new GsonBuilder();
             // register type adapters here, specify field naming policy, etc.
@@ -88,6 +93,7 @@ public class AsyncTaskCargarBilletero  extends AsyncTask<String, Void, String[]>
             OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
             wr.write(gson.toJson(body));
             wr.close();
+            Log.i("ASYNCTASK","WR");
 
             int status = connection.getResponseCode();
             BufferedReader rd= new BufferedReader(new InputStreamReader(status < 400 ? connection.getInputStream() : connection.getErrorStream()));
@@ -95,12 +101,17 @@ public class AsyncTaskCargarBilletero  extends AsyncTask<String, Void, String[]>
             while ((line = rd.readLine()) != null) {
                 response.append(line);
             }
+            Log.i("ASYNCTASK","RESPONSE");
 
             JSONObject jsonObject = new JSONObject(response.toString());
             JSONObject jsonStatus = jsonObject.getJSONObject(AppConstants.WebParams.STATUS);
             result[0] = jsonStatus.getString(AppConstants.WebParams.CODE);
             result[1] = jsonStatus.getString(AppConstants.WebParams.MESSAGE);
-            result[2] = jsonObject.getString(AppConstants.WebParams.VALOR_BILLETERO);
+            Log.i("ASYNCTASK","RESULT");
+
+            if (result[0].equals(AppConstants.WebResult.OK)) {
+                result[2]=jsonObject.getString(AppConstants.WebParams.USER_CLAVE_BD);
+            }
 
         } catch (IOException e) {
             MsgUtils.handleException(e);
@@ -116,20 +127,21 @@ public class AsyncTaskCargarBilletero  extends AsyncTask<String, Void, String[]>
             }
         }
 
-
+        Log.i("ASYNCTASK","FIN");
 
         return result;
     }
 
     @Override
-    protected void onPostExecute(String[] strings) {
+    protected void onPostExecute(String[] resultValue) {
         progressDialog.dismiss();
         if (binder != null) {
-            binder.processFinish(strings);
+            binder.processFinish(resultValue);
         }
-        super.onPostExecute(strings);
-    }
+        Log.i("ASYNCTASK","POST");
 
+        super.onPostExecute(resultValue);
+    }
 
 
 }

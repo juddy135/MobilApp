@@ -22,6 +22,7 @@ import co.com.ies.fidelizacioncliente.R;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragAlert;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragConfirm;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragInput;
+import co.com.ies.fidelizacioncliente.dialog.DialogFragOnlyConfirm;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragSearch;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragVideo;
 

@@ -16,6 +16,8 @@ public class AppConstants {
     public final static int RESULT_DIALOG_CARGAR = 1;
     public final static int RESULT_DIALOG_DESCARGAR = 2;
 
+    public final static String CONTEO_RESEND = "resend";
+    public final static int CONSTANTE_LIMITE_REENVIO_SMS=3;
 
     /**
      * Nombres de las keys de las preferencias
@@ -80,6 +82,7 @@ public class AppConstants {
         public final static String PROTOCOL = "https://";
         public final static String FIDELIZAR_CLIENTE = BASE_URL + "fidelizarClienteXMaquina";
         public final static String REENVIAR_CLAVE = BASE_URL + "reenviarClaveDinamica";
+        public final static String REENVIAR_CLAVE_EMAIL = BASE_URL + "reenviarClaveDinamicaEmail";
         /*CASHLESS*/
         public static final String CARGAR_BILLETERO = "/MobileApp/api/cashless/cargarBilletero";
         public static final String REDIMIR_BILLETERO = "/MobileApp/api/cashless/redimirBilletero";
@@ -132,6 +135,7 @@ public class AppConstants {
         public static final String GET_ALL = "cargaTodo";
         public static final String VALOR_BILLETERO = "billeteroCliente";
         public static final String CONSECUTIVO = "consecutivoPremio";
+        public static final String VALOR_CARGA = "carga";
 
         public static final String ITEM_CONSECUTIVO="consecutivo";
         public static final String ITEM_FECHA="fechaGeneracion";
@@ -208,6 +212,7 @@ public class AppConstants {
         public final static String FIDEL_ERROR = "43";
         public final static String CLOSE_ERROR = "44";
         public final static String CLAVE_VENCIDA = "75";
+        public final static String MAQUINA_BLOQUEADA = "78";
     }
 
     /**
@@ -267,6 +272,7 @@ public class AppConstants {
         public static final String SERVICE_ASKED="callservice";
         public static final String CLAVE_CLIENTE="claveCliente";
         public static final String VALOR_BILLETERO="valorBilletero";
+        public static final String CLAVE_BILLETERA="claveChange";
 
     }
 

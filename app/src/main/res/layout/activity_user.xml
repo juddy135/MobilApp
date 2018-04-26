@@ -17,8 +17,6 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         >
-
-
         <RelativeLayout
             android:id="@+id/layout_user"
             android:layout_width="0dp"
@@ -193,34 +191,25 @@
             <!-- parte de fidelizacion -->
             <RelativeLayout
                 android:id="@+id/act_user_lyt_fidel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/wrapwrap"
                 android:layout_centerInParent="true"
                 android:visibility="gone">
 
                 <RelativeLayout
                     android:id="@+id/rl_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/wrapwrap"
                     android:layout_marginStart="@dimen/common_margin_huge3"
+                    android:layout_marginBottom="@dimen/common_margin_huge"
+                    android:layout_marginTop="@dimen/common_margin_huge"
                     >
-
-                    <ImageView
-                        android:id="@+id/iv_starts"
-                        android:layout_width="200dp"
-                        android:layout_height="140dp"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/succes"
-                        />
 
                     <TextView
                         android:id="@+id/act_user_txt_name"
-                        android:layout_below="@+id/iv_starts"
                         android:layout_width="220dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/common_margin_huge"
                         android:layout_centerInParent="true"
-                        android:textColor="@color/text_dark_blue"
+                        android:textColor="@color/transparent_white"
                         android:textStyle="bold"
                         android:gravity="center"
                         android:maxLines="2"
@@ -235,8 +224,7 @@
 
                 <RelativeLayout
                     android:id="@+id/rl_puntos_redimidos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/wrapwrap"
                     android:layout_marginStart="@dimen/common_margin_huge"
                     android:layout_below="@+id/rl_name"
                     android:layout_toEndOf="@+id/rl_puntos_totales"
@@ -250,16 +238,15 @@
 
                     <TextView
                         android:id="@+id/act_user_txt_points"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
+                        style="@style/wrapwrap"
                         android:gravity="center"
-                        android:text="10000"
+                        android:text="0"
                         android:textColor="@color/text_dark_blue"
                         android:textSize="@dimen/size_txt_points"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="@dimen/common_margin_medium"
                         android:layout_marginStart="@dimen/common_margin_huge"
-                        android:layout_marginTop="35dp"
+                        android:layout_marginTop="50dp"
 
                         />
 
@@ -281,8 +268,7 @@
 
                 <RelativeLayout
                     android:id="@+id/rl_puntos_totales"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/wrapwrap"
                     android:layout_below="@+id/rl_name"
 
                     >
@@ -295,16 +281,15 @@
 
                     <TextView
                         android:id="@+id/act_user_txt_points_redeemed"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
+                        style="@style/wrapwrap"
                         android:gravity="center"
-                        android:text="10000"
+                        android:text="0"
                         android:textColor="@color/text_dark_blue"
                         android:textSize="@dimen/size_txt_points2"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="@dimen/common_margin_medium"
                         android:layout_marginStart="@dimen/common_margin_huge"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="50dp"
 
                         />
 

@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import co.com.ies.fidelizacioncliente.R;
@@ -29,16 +30,19 @@ public class DialogFragClave extends DialogFragment {
 
 
     String claveDB;
-    int resultRequest;
+    int resultRequest, conteoResend=0;
     private EditText etClave;
     private Button btnConfirmar;
     private Button btnCancelar;
     private Button btnReenviar;
+    private Button btnReenviarEmail;
+    private LinearLayout ll_resend_email;
 
     public interface ClaveDinamicaDialogActionsListener{
         void onDialogConfirmClick(DialogFragment dialogFragment, int resultCode, String clave);
         void onDialogResendClick(DialogFragment dialogFragment);
         void onDialogCancelClick(DialogFragment dialogFragment);
+        void onDialogResendEmailClick(DialogFragment dialogFragment);
     }
 
     ClaveDinamicaDialogActionsListener mListener;
@@ -73,27 +77,34 @@ public class DialogFragClave extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        return inflater.inflate(R.layout.dialog_frag_clavedinamica, container, false);
-
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
         etClave=(EditText) view.findViewById(R.id.dialog_frag_clave_edt);
         btnConfirmar=(Button) view.findViewById(R.id.dialog_frag_clave_btn_accept);
         btnCancelar=(Button) view.findViewById(R.id.dialog_frag_clave_btn_cancel);
         btnReenviar=(Button) view.findViewById(R.id.dialog_frag_clave_btn_resend);
+        btnReenviarEmail=(Button) view.findViewById(R.id.dialog_frag_clave_btn_resend_email);
+        ll_resend_email=(LinearLayout) view.findViewById(R.id.layout_resend_email);
 
         Bundle bndle = getArguments();
         claveDB=bndle.getString(AppConstants.WebParams.USER_CLAVE_BD,"0");
         resultRequest=bndle.getInt(AppConstants.RESULT_DIALOG, 0);
+        conteoResend=bndle.getInt(AppConstants.CONTEO_RESEND, 0);
+
+        //Si se cumple el limite de reenvio de sms
+        if(conteoResend+1 >= AppConstants.CONSTANTE_LIMITE_REENVIO_SMS){
+            ll_resend_email.setVisibility(View.VISIBLE);
+        }else{
+            ll_resend_email.setVisibility(View.GONE);
+        }
 
         Log.i("DIALOG"," clave BD"+claveDB);
 
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("DIALOG"," CODE "+resultRequest);
                 //ACCEPT
                 if(claveDB.equals(etClave.getText().toString())){
                     dismiss();
@@ -120,6 +131,15 @@ public class DialogFragClave extends DialogFragment {
                 //CANCEL
                 dismiss();
                 mListener.onDialogCancelClick(DialogFragClave.this);
+            }
+        });
+
+        btnReenviarEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //RESEND EMAIL
+                dismiss();
+                mListener.onDialogResendEmailClick(DialogFragClave.this);
             }
         });
 
