@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -98,7 +97,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
     private ImageView imgBar;
 
     private boolean serviceAsked;
-    //todo setear de manera correcta el parametro
+
     private boolean paramEnableKeyboard;
     private boolean paramShowVideo;//parametro para validar si se muestra video
     private SharedPreferences preferences;
@@ -126,7 +125,6 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
     private AsyncTaskFidelizarCliente.AsyncResponse responseFidelizarCliente;
     private LetterNumberKeyboard.OnOkeyClickListener keyboardListener;
 
-    private Locale locale;
     private NumberFormat numberFormatter;
     private LetterNumberKeyboard numberKeyboard;
 
@@ -353,7 +351,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
                             setVisibilityUserLogged();
                             ALLOW_VIDEO = false;//borrar para no mostrar video en login;
                             stopShowingVideo();
-                        }else if(enableBilletero==AppConstants.WebResult.FAIL && serviceType==AppConstants.ServiceType.CASHLESS){
+                        }else if(enableBilletero.equals(AppConstants.WebResult.FAIL) && serviceType==AppConstants.ServiceType.CASHLESS){
                             MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),getString(R.string.common_user_no_cashless));
                             //CERRAR SESION
                             closeSesion();
@@ -547,16 +545,15 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
         paramEnableKeyboard = preferences.getBoolean(AppConstants.Prefs.SHOW_KEYBOARD, false);
         paramShowVideo = preferences.getBoolean(AppConstants.Prefs.SHOW_VIDEO, false);
 
-        locale = new Locale("es", "CO");
+        Locale locale = new Locale("es", "CO");
         numberFormatter = NumberFormat.getNumberInstance(locale);
 
         numberFormatter.setMaximumFractionDigits(0);
         numberFormatter.setMinimumFractionDigits(0);
 
-        StringBuilder numMaq=new StringBuilder(getString(R.string.act_num_maquina));
-        numMaq.append(": ");
-        numMaq.append(preferences.getString(AppConstants.Prefs.NUM_DISP,""));
-        txtNumMaquina.setText(numMaq.toString());
+        String numMaq = getString(R.string.act_num_maquina) + ": " +
+                preferences.getString(AppConstants.Prefs.NUM_DISP, "");
+        txtNumMaquina.setText(numMaq);
 
         serviceType = preferences.getInt(AppConstants.Prefs.USO, 0);
         if (serviceType == AppConstants.ServiceType.FIDELIZACION) {
@@ -793,7 +790,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
     }
 
     private void setVisibilityUserLogged() {
-        if (serviceType == AppConstants.ServiceType.CASHLESS && enableBilletero==AppConstants.WebResult.OK) {
+        if ((serviceType == AppConstants.ServiceType.CASHLESS) && (enableBilletero.equals(AppConstants.WebResult.OK))) {
             iniciarCashless();
         }else if(serviceType != AppConstants.ServiceType.CASHLESS){
             edtDoc.setText("");
@@ -802,7 +799,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
                 imgBar.setVisibility(GONE);
             }
             //Solo cuando el usuario se ha logueado se muestra el boton de Cahsless
-            if (serviceType == AppConstants.ServiceType.FIDELBARCASH && enableBilletero==AppConstants.WebResult.OK) {
+            if (serviceType == AppConstants.ServiceType.FIDELBARCASH && enableBilletero.equals(AppConstants.WebResult.OK)) {
                 btnCashless.setVisibility(View.VISIBLE);
             }
 

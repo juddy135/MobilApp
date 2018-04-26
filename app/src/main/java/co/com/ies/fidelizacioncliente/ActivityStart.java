@@ -24,7 +24,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  */
 public class ActivityStart extends ActivityBase implements DialogFragInput.NoticeDialogActionsListener {
 
-    public static String PREV_ACTIVITY = "PREV_ACt";
+    //public static String PREV_ACTIVITY = "PREV_ACt";
     private SharedPreferences preferences;
     private AsyncTaskValidateService.AsyncResponse responseValidateService;
     private boolean isSentBySettings;
