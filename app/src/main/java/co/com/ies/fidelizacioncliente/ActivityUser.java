@@ -808,7 +808,6 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
 
             btnMenu.setVisibility(GONE);
             btnCloseSession.setVisibility(View.VISIBLE);
-            txtNumMaquina.setVisibility(GONE);
             txtNombre.setText(FidelizacionApplication.getInstance().getUserName());
         }
 
