@@ -28,22 +28,15 @@ public class SqliteConnection {
     }
 
 
-    /**
-     * Establece la base de datos
-     */
+    /** Establece la base de datos */
     private void establishDb() {
-
         if (this.dbSqlite == null) {
             this.dbSqlite = this.dbOpenHelper.getWritableDatabase();
         }
     }
 
-    /**
-     * limpia la referencia a la base de datos
-     */
-
+    /** limpia la referencia a la base de datos */
     public SQLiteDatabase getDbSqlite() {
-
         if (dbSqlite == null) {
             establishDb();
         } else if (!dbSqlite.isOpen()) {
@@ -66,13 +59,9 @@ public class SqliteConnection {
         return instance;
     }
 
-    /**
-     * Se valida si existe alguna conexion activa, si lo hay esta es retornada y sumamos el contador de conectados, si no lo hay, la creamos y la retornamos
-     *
-     * @return
-     */
+    /** Se valida si existe alguna conexion activa, si lo hay esta es retornada y sumamos el contador de conectados, si no lo hay, la creamos y la retornamos
+     * @return */
     public synchronized SQLiteDatabase openDatabase() {
-
         if (mOpenCounter.incrementAndGet() < 1) {
             // Opening new database
             dbSqlite = dbOpenHelper.getWritableDatabase();
@@ -81,11 +70,8 @@ public class SqliteConnection {
         return dbSqlite;
     }
 
-    /**
-     * Se valida en este metodo es la unica conexión abierta y si lo es, se cierra la base de daos
-     */
+    /**  Se valida en este metodo es la unica conexión abierta y si lo es, se cierra la base de daos */
     public synchronized void closeDatabase() {
-
         if (mOpenCounter.decrementAndGet() < 1) {
             // Closing database
             dbSqlite.close();

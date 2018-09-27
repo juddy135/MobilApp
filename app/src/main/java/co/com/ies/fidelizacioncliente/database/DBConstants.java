@@ -27,7 +27,6 @@ public class DBConstants {
     }
 
     public class Machines {
-
         public static final String TABLE = "machines";
         public static final String NUM_DISP = "num_disp";
         public static final String ID_CASSINO = Cassinos.ID_;

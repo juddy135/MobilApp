@@ -872,6 +872,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
     //______________________________________________________________________________ASK PUNTOS____________________
 
     private void startAskingPoints() {
+        Log.i(":::<<<PUNTOS>>>:::","pedir puntos");
         url = preferences.getString(AppConstants.Prefs.URL, "");
         casinoCode = preferences.getString(AppConstants.Prefs.ID_CASINO, "");
         serial = preferences.getString(AppConstants.Prefs.SERIAL, "");

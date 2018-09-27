@@ -52,7 +52,6 @@ public class AsyncTaskVerPremios extends AsyncTask<String, Void, PremioInfo> {
         progressDialog.setMessage(context.getString(R.string.act_login_esperando));
         progressDialog.show();
         super.onPreExecute();
-
     }
 
     @Override
