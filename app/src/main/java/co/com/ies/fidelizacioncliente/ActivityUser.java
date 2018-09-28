@@ -38,6 +38,7 @@ import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskCloseSession;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskEnviarClave;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskEnviarClaveCorreo;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskFidelizarCliente;
+import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskStateCallService;
 import co.com.ies.fidelizacioncliente.asynctask.AsyncTaskUserPoints;
 import co.com.ies.fidelizacioncliente.base.ActivityBase;
 import co.com.ies.fidelizacioncliente.custom.keyboard.LetterNumberKeyboard;
@@ -99,13 +100,14 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
     private ImageView imgBar;
 
     private boolean serviceAsked;
-    //todo setear de manera correcta el parametro
+    // setear de manera correcta el parametro
     private boolean paramEnableKeyboard;
     private boolean paramShowVideo;//parametro para validar si se muestra video
     private SharedPreferences preferences;
     private AsyncTaskUserPoints asyncTaskUserPoints;
     private AsyncTaskEnviarClave asyncTaskEnviarClave;
     private AsyncTaskFidelizarCliente asyncTaskFidelizarCliente;
+    private AsyncTaskStateCallService asyncTaskStateCallService;
     private int serviceType, conteoResend;
     private String url;
     private String casinoCode;
@@ -117,6 +119,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
 
     private TimerTask taskPoints;
     private TimerTask taskVideo;
+    private TimerTask taskCall;
 
     private AsyncTaskUserPoints.AsyncResponse responseUserPoints;
     private AsyncTaskCloseSession.AsyncResponse responseCloseSession;
@@ -126,6 +129,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
     private AsyncTaskEnviarClaveCorreo.AsyncResponse responseEnviarClaveCorreo;
     private AsyncTaskAskBilletero.AsyncResponse responseConsultarBilletero;
     private AsyncTaskFidelizarCliente.AsyncResponse responseFidelizarCliente;
+    private AsyncTaskStateCallService.AsyncResponse responseStateCallService;
     private LetterNumberKeyboard.OnOkeyClickListener keyboardListener;
 
     private Locale locale;
@@ -150,7 +154,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
         if (!StringUtils.isNullOrEmpty(FidelizacionApplication.getInstance().getUserDoc())
                 && taskPoints == null) {
             startAskingPoints();
-        } //todo borrar para no mostrar video en login; else {
+        } // borrar para no mostrar video en login; else {
         startShowingVideo();
         //}
     }
@@ -355,7 +359,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
                             setVisibilityUserLogged();
                             ALLOW_VIDEO = false;//borrar para no mostrar video en login;
                             stopShowingVideo();
-                        }else if(enableBilletero==AppConstants.WebResult.FAIL && serviceType==AppConstants.ServiceType.CASHLESS){
+                        }else if(enableBilletero.equals(AppConstants.WebResult.FAIL) && serviceType==AppConstants.ServiceType.CASHLESS){
                             MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),getString(R.string.common_user_no_cashless));
                             //CERRAR SESION
                             closeSesion();
@@ -374,7 +378,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
                     case AppConstants.WebResult.CLIENT_NOT_FOUND:
                         MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),
                                 getString(R.string.message_client_not_found));
-                        //todo borrar para no mostrar video en login; ALLOW_VIDEO = true;
+                        // borrar para no mostrar video en login; ALLOW_VIDEO = true;
                         break;
                     case AppConstants.WebResult.FAIL:
                         ALLOW_VIDEO = false;
@@ -391,6 +395,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
             }
         };
 
+    /*__________________________________CALL SERVICE______________________________________________*/
         responseCallService = new AsyncTaskCallService.AsyncResponse() {
             @Override
             public void onCallServiceFinish(String[] codigoEstado) {
@@ -401,13 +406,14 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
                             MsgUtils.biggetToast(ActivityUser.this, getString(R.string.act_user_call_attendant_done));
                             imgCallService.setVisibility(View.INVISIBLE);
                             idsolicitud="";
+                            stopAskingCallService();
                         } else {
                             MsgUtils.biggetToast(ActivityUser.this, getString(R.string.act_user_call_attendant_waiting));
                             imgCallService.setVisibility(View.VISIBLE);
                             idsolicitud=codigoEstado[2];
+                            startAskingCallService();
                         }
                         serviceAsked = !serviceAsked;
-                        //todo borrar para no mostrar video en login; if(!FidelizacionApplication.getInstance().isUserLogged())
                         ALLOW_VIDEO = true;
                         break;
                     case AppConstants.WebResult.FAIL:
@@ -418,13 +424,34 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
                     default:
                         MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),
                                 codigoEstado[1]);
-                        //todo borrar para no mostrar video en login; if(!FidelizacionApplication.getInstance().isUserLogged())
+                        // borrar para no mostrar video en login; if(!FidelizacionApplication.getInstance().isUserLogged())
                         ALLOW_VIDEO = true;
                         idsolicitud="";
                         break;
 
                 }
 
+            }
+        };
+
+    /*__________________________________ESTADO CALL SERVICE___________________________________________*/
+        responseStateCallService= new AsyncTaskStateCallService.AsyncResponse() {
+            @Override
+            public void onStateCallServiceFinish(String[] codigoEstado) {
+                switch (codigoEstado[0]) {
+                    case AppConstants.WebResult.OK:
+                        Log.i("---------RESPONSE STATE",codigoEstado[2]);
+                        if (codigoEstado[2].equals(EstadoSolicitudEnum.ATENDIDA.toString())){
+                            imgCallService.setVisibility(View.INVISIBLE);
+                            serviceAsked = !serviceAsked;
+                            stopAskingCallService();
+                        }
+
+                        break;
+                    default:
+
+                        break;
+                }
             }
         };
 
@@ -504,7 +531,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
                         break;
                     default:
                         MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),codigoEstado[1]);
-                        //todo borrar para no mostrar video en login; if(!FidelizacionApplication.getInstance().isUserLogged())
+                        // borrar para no mostrar video en login; if(!FidelizacionApplication.getInstance().isUserLogged())
                         ALLOW_VIDEO = true;
                         break;
 
@@ -538,7 +565,6 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
             }
         };
 
-
     }
 
     /**
@@ -558,10 +584,8 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
         numberFormatter.setMaximumFractionDigits(0);
         numberFormatter.setMinimumFractionDigits(0);
 
-        StringBuilder numMaq=new StringBuilder(getString(R.string.act_num_maquina));
-        numMaq.append(": ");
-        numMaq.append(preferences.getString(AppConstants.Prefs.NUM_DISP,""));
-        txtNumMaquina.setText(numMaq.toString());
+        String numMaq=getString(R.string.act_num_maquina)+": "+preferences.getString(AppConstants.Prefs.NUM_DISP,"");
+        txtNumMaquina.setText(numMaq);
 
         serviceType = preferences.getInt(AppConstants.Prefs.USO, 0);
         if (serviceType == AppConstants.ServiceType.FIDELIZACION) {
@@ -801,7 +825,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
     }
 
     private void setVisibilityUserLogged() {
-        if (serviceType == AppConstants.ServiceType.CASHLESS && enableBilletero==AppConstants.WebResult.OK) {
+        if (serviceType == AppConstants.ServiceType.CASHLESS && enableBilletero.equals(AppConstants.WebResult.OK)) {
             iniciarCashless();
         }else if(serviceType != AppConstants.ServiceType.CASHLESS){
             edtDoc.setText("");
@@ -810,7 +834,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
                 imgBar.setVisibility(GONE);
             }
             //Solo cuando el usuario se ha logueado se muestra el boton de Cahsless
-            if (serviceType == AppConstants.ServiceType.FIDELBARCASH && enableBilletero==AppConstants.WebResult.OK) {
+            if (serviceType == AppConstants.ServiceType.FIDELBARCASH && enableBilletero.equals(AppConstants.WebResult.OK)) {
                 btnCashless.setVisibility(View.VISIBLE);
             }
 
@@ -848,13 +872,13 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
         lytLogin.setVisibility(View.VISIBLE);
         lytUser.setVisibility(View.GONE);
 
-        //todo validar si esto es correcto
+        // validar si esto es correcto
         setVisibilityInputForm();
 
         btnMenu.setVisibility(View.VISIBLE);
         btnCloseSession.setVisibility(View.GONE);
 
-        /*todo borrar para no mostrar video en login;
+        /* borrar para no mostrar video en login;
         ALLOW_VIDEO = true;
         startShowingVideo();*/
     }
@@ -904,6 +928,27 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
             taskPoints = null;
         }
     }
+//___________________________________________________________________________________________CALL SERVICE
+    private void startAskingCallService() {
+        Log.i(":::CALLSERVICE:::","consultar estado call service");
+        taskCall = new TimerTask() {
+            @Override
+            public void run() {
+                if (WebUtils.isOnline(ActivityUser.this)) {
+                    asyncTaskStateCallService = (AsyncTaskStateCallService) new AsyncTaskStateCallService(getApplicationContext(), responseStateCallService).execute(idsolicitud);
+                }
+            }
+        };
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(taskCall, AppConstants.INTERV_UPDATE_CALL, AppConstants.DEF_INTERV_UPDATE_CALL);
+    }
+
+    private void stopAskingCallService() {
+        if (taskCall != null) {
+            taskCall.cancel();
+            taskCall = null;
+        }
+    }
 
     //______________________________________________________________________________VIDEO____________________________
 
@@ -914,7 +959,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
             taskVideo = new TimerTask() {
                 @Override
                 public void run() {
-                    //todo mostrar video, validaciones dentro del metodo
+                    //mostrar video, validaciones dentro del metodo
                     if (ALLOW_VIDEO && PermissionUtils.handleVersionExternalStorage(ActivityUser.this)) {
                         String videoPath = Environment.getExternalStorageDirectory().getAbsolutePath() +
                                 AppConstants.FileExtension.PATH_CONFIG + AppConstants.FileExtension.VIDEO_INTRO;
@@ -939,7 +984,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
     private void startFidelizacion() {
         if (!edtDoc.getText().toString().isEmpty()) {
             try {
-                //todo borrar para no mostrar video en login; ALLOW_VIDEO = false;
+                //borrar para no mostrar video en login; ALLOW_VIDEO = false;
                 if (paramEnableKeyboard) {
                     setVisibilityKeyBoard();
                     new AsynTaskValidateUser(this, responseValidateUser).execute(edtDoc.getText().toString());

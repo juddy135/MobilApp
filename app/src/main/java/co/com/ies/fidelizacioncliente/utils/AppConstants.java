@@ -19,6 +19,10 @@ public class AppConstants {
     public final static String CONTEO_RESEND = "resend";
     public final static int CONSTANTE_LIMITE_REENVIO_SMS=3;
 
+    public final static int INTERV_UPDATE_CALL = 2000;//mili segundos
+    public final static int DEF_INTERV_UPDATE_CALL = 15000;//mili segundos
+
+
     /**
      * Nombres de las keys de las preferencias
      */
@@ -79,6 +83,7 @@ public class AppConstants {
         public static final String ORDER_BUY = "/MobileApp/api/bar/comprarPremio";
         //public static final String CALL_SERVICE = "/MobileApp/api/varios/llamadoMaquina";
         public static final String CALL_SERVICE = "/MobileApp/api/varios/solicitudCliente";
+        public static final String STATE_CALL_SERVICE = "/MobileApp/api/varios/estadoSolicitud";
         public static final String CASINO_LOGO = "/MobileApp/api/bar/obtenerImagenBar";
         public final static String PROTOCOL = "https://";
         public final static String FIDELIZAR_CLIENTE = BASE_URL + "fidelizarClienteXMaquina";
@@ -138,6 +143,7 @@ public class AppConstants {
         public static final String CONSECUTIVO = "consecutivoPremio";
         public static final String VALOR_CARGA = "carga";
         public static final String ID_CALLSERVICE = "idSolicitud";
+        public static final String STATE_CALLSERVICE = "estado";
 
         public static final String ITEM_CONSECUTIVO="consecutivo";
         public static final String ITEM_FECHA="fechaGeneracion";
