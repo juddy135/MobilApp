@@ -4,6 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,6 +15,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
@@ -18,6 +23,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 import co.com.ies.fidelizacioncliente.R;
 import co.com.ies.fidelizacioncliente.application.FidelizacionApplication;
+import co.com.ies.fidelizacioncliente.entity.CallServiceBody;
+import co.com.ies.fidelizacioncliente.entity.EstadoSolicitudEnum;
 import co.com.ies.fidelizacioncliente.utils.AppConstants;
 import co.com.ies.fidelizacioncliente.utils.MsgUtils;
 import co.com.ies.fidelizacioncliente.utils.SharedPrefUtils;
@@ -62,10 +69,11 @@ public class AsyncTaskCallService extends AsyncTask<String, Void, String[]> {
     @Override
     protected String[] doInBackground(String... paramss) {
 
-        String[] result = new String[]{AppConstants.WebResult.FAIL, context.getString(R.string.common_fail)};
-        String process = paramss[0];
+        String[] result = new String[]{AppConstants.WebResult.FAIL, context.getString(R.string.common_fail),""};
+        String documentoCliente = paramss[0];
+        String estado = paramss[1];
+        String idtransaccion = paramss[2];
         StringBuilder response = new StringBuilder();
-        String cookie = FidelizacionApplication.getInstance().getCookie();
 
         HttpsURLConnection connection = null;
 
@@ -73,29 +81,37 @@ public class AsyncTaskCallService extends AsyncTask<String, Void, String[]> {
 
             if (WebUtils.isOnline(context)) {
 
+                String targetUrl = AppConstants.WebServs.PROTOCOL + preferences.getString(AppConstants.Prefs.URL, "") + AppConstants.WebServs.CALL_SERVICE;
 
-                String targetUrlValidate = AppConstants.WebServs.PROTOCOL + preferences.getString(AppConstants.Prefs.URL, "") +
-                        AppConstants.WebServs.CALL_SERVICE;
-
-                StringBuilder stringBuilderValidate = new StringBuilder();
-                WebUtils.addParam(stringBuilderValidate, AppConstants.WebParams.SERIAL, preferences.getString(AppConstants.Prefs.SERIAL, ""));
-                WebUtils.addParam(stringBuilderValidate, AppConstants.WebParams.CASINO_CODE, preferences.getString(AppConstants.Prefs.ID_CASINO, ""));
-
-                connection = WebUtils.createHttpsConnection(targetUrlValidate + "?" + stringBuilderValidate.toString(), cookie);
-
-                int statusValidate = connection.getResponseCode();
-                BufferedReader rdValidate
-                        = new BufferedReader(new InputStreamReader(statusValidate < 400 ? connection.getInputStream() : connection.getErrorStream()));
-                String lineV;
-                while ((lineV = rdValidate.readLine()) != null) {
-                    response.append(lineV);
+                CallServiceBody body=new CallServiceBody(preferences.getString(AppConstants.Prefs.SERV_USR, ""), preferences.getString(AppConstants.Prefs.ID_CASINO, ""), preferences.getString(AppConstants.Prefs.SERIAL, ""));
+                body.setDocumentoCliente(documentoCliente);
+                body.setEstado(estado);
+                if(!idtransaccion.isEmpty()){
+                    body.setIdsolicitud(idtransaccion);
                 }
 
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                // register type adapters here, specify field naming policy, etc.
+                Gson gson = gsonBuilder.create();
+                connection = WebUtils.createHttpsConnectionJson(targetUrl,FidelizacionApplication.getInstance().getCookie());
 
-                JSONObject jsonObject = new JSONObject(response.toString()).getJSONObject(AppConstants.WebParams.STATUS);
+                OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
+                wr.write(gson.toJson(body));
+                wr.close();
+
+                int status = connection.getResponseCode();
+                BufferedReader rd= new BufferedReader(new InputStreamReader(status < 400 ? connection.getInputStream() : connection.getErrorStream()));
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    response.append(line);
+                }
+                Log.i(":::CALL:::",response.toString());
+                JSONObject jsonObjectB = new JSONObject(response.toString());
+                JSONObject jsonObject = jsonObjectB.getJSONObject(AppConstants.WebParams.STATUS);
 
                 result[0] = jsonObject.getString(AppConstants.WebParams.CODE);
                 result[1] = jsonObject.getString(AppConstants.WebParams.MESSAGE);
+                result[2] = jsonObjectB.getString(AppConstants.WebParams.ID_CALLSERVICE);
 
             } else {
                 result[0] = AppConstants.WebResult.NO_INTERNET;

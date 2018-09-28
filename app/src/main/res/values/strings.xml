@@ -110,7 +110,7 @@
     <string name="act_cargar_billetero">Cargar Máquina</string>
 
     <string name="act_user_call_attendant_waiting">En un momento el personal se acercará a ud</string>
-    <string name="act_user_call_attendant_done">La llamada para asistencia ha sido cancelada o atendida</string>
+    <string name="act_user_call_attendant_done">La llamada para asistencia ha sido cancelada</string>
 
     <string name="act_bar_list_confirm_title">Pedir snack</string>
     <string name="act_bar_list_redeem_message">¿Estás seguro de redimir un(a) %1$s?</string>

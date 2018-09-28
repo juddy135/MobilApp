@@ -33,6 +33,7 @@ import co.com.ies.fidelizacioncliente.dialog.DialogFragAlert;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragClave;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragConfirm;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragOnlyConfirm;
+import co.com.ies.fidelizacioncliente.entity.EstadoSolicitudEnum;
 import co.com.ies.fidelizacioncliente.entity.PremioInfo;
 import co.com.ies.fidelizacioncliente.utils.AppConstants;
 import co.com.ies.fidelizacioncliente.utils.MsgUtils;
@@ -63,7 +64,7 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
     private SharedPreferences preferences;
     private NumberFormat numberFormatter;
     private Locale locale;
-    private String docUSR,claveUSR, valorBilletero="0", valorPremio="0",valorOldBilletero="0.0",valorActBilletero="0.0";
+    private String docUSR,claveUSR, valorBilletero="0", valorPremio="0",valorOldBilletero="0.0",valorActBilletero="0.0", idsolicitud="";
     private int action,actionConfirm, conteoResend;
     private boolean DEVOLVERDINERO=false;
 
@@ -149,15 +150,17 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
                         if (serviceAsked) {
                             MsgUtils.biggetToast(ActivityCashless.this, getString(R.string.act_user_call_attendant_done));
                             imgCallService.setVisibility(View.INVISIBLE);
+                            idsolicitud="";
                         } else {
                             MsgUtils.biggetToast(ActivityCashless.this, getString(R.string.act_user_call_attendant_waiting));
                             imgCallService.setVisibility(View.VISIBLE);
-
+                            idsolicitud=codigoEstado[2];
                         }
                         serviceAsked = !serviceAsked;
                         break;
                     default:
                         MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),codigoEstado[1]);
+                        idsolicitud="";
                         break;
 
                 }
@@ -369,7 +372,8 @@ public class ActivityCashless extends ActivityBase implements DialogFragConfirm.
     }
 
     public void onClickCallService(View view) {
-        new AsyncTaskCallService(this, responseCallService).execute(serviceAsked ?AppConstants.CallService.STOP_SERVICE :AppConstants.CallService.ASK_SERVICE);
+        String estadoS=serviceAsked ?EstadoSolicitudEnum.CANCELADA.toString():EstadoSolicitudEnum.PENDIENTE.toString();
+        new AsyncTaskCallService(this, responseCallService).execute(docUSR, estadoS, idsolicitud);
     }
 
     public void onClickCloseSession(View view) {

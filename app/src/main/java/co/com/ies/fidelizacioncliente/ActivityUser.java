@@ -43,6 +43,7 @@ import co.com.ies.fidelizacioncliente.base.ActivityBase;
 import co.com.ies.fidelizacioncliente.custom.keyboard.LetterNumberKeyboard;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragClave;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragConfirm;
+import co.com.ies.fidelizacioncliente.entity.EstadoSolicitudEnum;
 import co.com.ies.fidelizacioncliente.manager.ManagerStandard;
 import co.com.ies.fidelizacioncliente.utils.AppConstants;
 import co.com.ies.fidelizacioncliente.utils.MsgUtils;
@@ -112,6 +113,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
     private String claveCliente;
     private String enableBilletero;
     private String valorBilletero;
+    private String idsolicitud="";
 
     private TimerTask taskPoints;
     private TimerTask taskVideo;
@@ -398,10 +400,11 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
                         if (serviceAsked) {
                             MsgUtils.biggetToast(ActivityUser.this, getString(R.string.act_user_call_attendant_done));
                             imgCallService.setVisibility(View.INVISIBLE);
+                            idsolicitud="";
                         } else {
                             MsgUtils.biggetToast(ActivityUser.this, getString(R.string.act_user_call_attendant_waiting));
                             imgCallService.setVisibility(View.VISIBLE);
-
+                            idsolicitud=codigoEstado[2];
                         }
                         serviceAsked = !serviceAsked;
                         //todo borrar para no mostrar video en login; if(!FidelizacionApplication.getInstance().isUserLogged())
@@ -410,12 +413,14 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
                     case AppConstants.WebResult.FAIL:
                         ALLOW_VIDEO = false;
                         backToValidateService();
+                        idsolicitud="";
                         break;
                     default:
                         MsgUtils.showSimpleMsg(getSupportFragmentManager(), getString(R.string.common_alert),
                                 codigoEstado[1]);
                         //todo borrar para no mostrar video en login; if(!FidelizacionApplication.getInstance().isUserLogged())
                         ALLOW_VIDEO = true;
+                        idsolicitud="";
                         break;
 
                 }
@@ -584,9 +589,12 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
 
     public void onClickCallService(View view) {
         ALLOW_VIDEO = false;
-        new AsyncTaskCallService(this, responseCallService).execute(serviceAsked ?
-                AppConstants.CallService.STOP_SERVICE :
-                AppConstants.CallService.ASK_SERVICE);
+        String estadoS=serviceAsked ?EstadoSolicitudEnum.CANCELADA.toString():EstadoSolicitudEnum.PENDIENTE.toString();
+        String docUser=FidelizacionApplication.getInstance().getUserDoc();
+        if(docUser== null ){
+            docUser="";
+        }
+        new AsyncTaskCallService(this, responseCallService).execute(docUser,estadoS,idsolicitud);
 
     }
 
@@ -872,7 +880,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
     //______________________________________________________________________________ASK PUNTOS____________________
 
     private void startAskingPoints() {
-        Log.i(":::<<<PUNTOS>>>:::","pedir puntos");
+        Log.i(":::PUNTOS:::","pedir puntos");
         url = preferences.getString(AppConstants.Prefs.URL, "");
         casinoCode = preferences.getString(AppConstants.Prefs.ID_CASINO, "");
         serial = preferences.getString(AppConstants.Prefs.SERIAL, "");

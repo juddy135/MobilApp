@@ -77,7 +77,8 @@ public class AppConstants {
         public static final String ORDER_CANCEL = "/MobileApp/api/bar/anularPeticion";
         public static final String ORDER_RECEIVED = "/MobileApp/api/bar/confirmarPeticion";
         public static final String ORDER_BUY = "/MobileApp/api/bar/comprarPremio";
-        public static final String CALL_SERVICE = "/MobileApp/api/varios/llamadoMaquina";
+        //public static final String CALL_SERVICE = "/MobileApp/api/varios/llamadoMaquina";
+        public static final String CALL_SERVICE = "/MobileApp/api/varios/solicitudCliente";
         public static final String CASINO_LOGO = "/MobileApp/api/bar/obtenerImagenBar";
         public final static String PROTOCOL = "https://";
         public final static String FIDELIZAR_CLIENTE = BASE_URL + "fidelizarClienteXMaquina";
@@ -136,6 +137,7 @@ public class AppConstants {
         public static final String VALOR_BILLETERO = "billeteroCliente";
         public static final String CONSECUTIVO = "consecutivoPremio";
         public static final String VALOR_CARGA = "carga";
+        public static final String ID_CALLSERVICE = "idSolicitud";
 
         public static final String ITEM_CONSECUTIVO="consecutivo";
         public static final String ITEM_FECHA="fechaGeneracion";
