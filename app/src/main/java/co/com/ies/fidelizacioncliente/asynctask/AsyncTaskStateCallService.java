@@ -84,10 +84,6 @@ public class AsyncTaskStateCallService extends AsyncTask<String, Void, String[]>
                 result[1] = jsonObject.getString(AppConstants.WebParams.MESSAGE);
                 result[2] = jsonObjectB.getString(AppConstants.WebParams.STATE_CALLSERVICE);
 
-                Log.i(":::STATE_CALL:::", result[0]);
-                Log.i(":::STATE_CALL:::", result[1]);
-                Log.i(":::STATE_CALL:::", result[2]);
-
             }else {
                 result[0] = AppConstants.WebResult.NO_INTERNET;
                 result[1] = context.getString(R.string.common_no_internet);

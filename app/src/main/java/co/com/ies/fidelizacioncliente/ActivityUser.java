@@ -440,7 +440,6 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
             public void onStateCallServiceFinish(String[] codigoEstado) {
                 switch (codigoEstado[0]) {
                     case AppConstants.WebResult.OK:
-                        Log.i("---------RESPONSE STATE",codigoEstado[2]);
                         if (codigoEstado[2].equals(EstadoSolicitudEnum.ATENDIDA.toString())){
                             imgCallService.setVisibility(View.INVISIBLE);
                             serviceAsked = !serviceAsked;
