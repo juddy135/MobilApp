@@ -105,7 +105,7 @@
         <Key
             android:codes="1000"
             android:keyEdgeFlags="right"
-            android:keyIcon="@drawable/ic_backspace_white_24dp" />
+            android:keyIcon="@drawable/backspace_white" />
     </Row>
 
     <Row>
@@ -133,12 +133,12 @@
             android:keyLabel="M" />
         <Key
             android:codes="1001"
-            android:keyIcon="@drawable/ic_keyboard_hide_white_24dp" />
+            android:keyIcon="@drawable/keyboard_close_white" />
 
         <Key
             android:codes="1002"
             android:keyEdgeFlags="right"
-            android:keyIcon="@drawable/ic_done_white_24dp"
+            android:keyIcon="@drawable/check_white"
             android:keyWidth="20%p" />
     </Row>
 </Keyboard>

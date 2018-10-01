@@ -131,7 +131,7 @@
         <ImageView
             android:id="@+id/ctm_item_bar_img_orderstate"
             style="@style/wrapwrap.margin"
-            android:background="@drawable/ic_on_hold_46dp" />
+            android:background="@drawable/bell_ring_yellow" />
         <TextView
             android:id="@+id/ctm_item_bar_txt_orderstate"
             android:layout_width="wrap_content"

@@ -26,14 +26,14 @@
             android:layout_gravity="end"
             android:background="@drawable/selector_button_circle_medium"
             android:onClick="onClicSync"
-            android:src="@drawable/ic_sync_black_36dp" />
+            android:src="@drawable/sync_black" />
 
         <ImageButton
             android:id="@+id/act_setting_btn_clear_all"
             style="@style/wrapwrap.marginbiggerET"
             android:background="@drawable/selector_button_circle_medium"
             android:onClick="onClicDeleteAll"
-            android:src="@drawable/ic_delete_forever_black_36dp"
+            android:src="@drawable/delete_forever_black"
             android:layout_toStartOf="@+id/act_setting_btn_sync" />
 
 

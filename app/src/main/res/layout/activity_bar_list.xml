@@ -36,7 +36,7 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/selector_square_2"
         android:onClick="onClickBack"
-        android:src="@drawable/ic_arrow_back_white_36dp" />
+        android:src="@drawable/arrow_left_white" />
 
     <!-- <ImageButton
          style="@style/wrapwrap.margin"

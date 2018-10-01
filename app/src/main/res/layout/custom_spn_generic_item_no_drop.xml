@@ -9,7 +9,7 @@
         style="@style/matchwrap"
         android:textSize="@dimen/common_textsize_big"
         android:gravity="left"
-        android:drawableEnd="@drawable/ic_expand_more_black_24dp"
+        android:drawableEnd="@drawable/chevron_down_black"
         android:textColor="@android:color/black"
         android:layout_marginTop="@dimen/common_margin_bigger"
         android:layout_marginEnd="@dimen/common_margin_bigger"

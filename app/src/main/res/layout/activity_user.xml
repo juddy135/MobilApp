@@ -24,7 +24,8 @@
             android:layout_marginLeft="@dimen/common_margin_medium"
             android:layout_weight="8"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
 
             <!-- parte login -->
@@ -35,7 +36,9 @@
                 android:layout_centerInParent="true"
                 android:orientation="vertical"
                 android:descendantFocusability="beforeDescendants"
-                android:focusableInTouchMode="true" >
+                android:focusableInTouchMode="true"
+                android:visibility="visible"
+                >
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -182,7 +185,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_keyboard_black_24dp"
+                    android:src="@drawable/keyboard_black"
                     android:background="@drawable/selector_btn_56dp"
                     android:onClick="onClickKeyboard" />
 
@@ -195,20 +198,21 @@
                 android:layout_centerInParent="true"
                 android:visibility="gone">
 
-                <RelativeLayout
-                    android:id="@+id/rl_name"
+
+                <LinearLayout
                     style="@style/wrapwrap"
-                    android:layout_marginStart="@dimen/common_margin_huge3"
+                    android:orientation="horizontal"
+                    android:id="@+id/rl_name"
+                    android:gravity="center"
+                    android:layout_marginStart="@dimen/common_margin_huge"
                     android:layout_marginBottom="@dimen/common_margin_huge"
                     android:layout_marginTop="@dimen/common_margin_huge"
                     >
-
                     <TextView
                         android:id="@+id/act_user_txt_name"
                         android:layout_width="220dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/common_margin_huge"
-                        android:layout_centerInParent="true"
                         android:textColor="@color/transparent_white"
                         android:textStyle="bold"
                         android:gravity="center"
@@ -219,8 +223,20 @@
                         android:background="@drawable/style_rectangle2"
                         />
 
+                    <ImageButton
+                        android:id="@+id/button_qr"
+                        android:layout_marginEnd="@dimen/common_margin_medium"
+                        android:layout_marginStart="@dimen/common_margin_medium"
+                        android:padding="@dimen/common_margin_bigger"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/qrcode_scan"
+                        android:background="@android:color/transparent"
+                        android:onClick="onClickQR"
+                        />
 
-                </RelativeLayout>
+
+                </LinearLayout>
 
                 <RelativeLayout
                     android:id="@+id/rl_puntos_redimidos"
@@ -377,7 +393,7 @@
                     android:id="@+id/act_user_img_service"
                     style="@style/wrapwrap"
                     android:layout_gravity="center"
-                    android:background="@drawable/ic_call"
+                    android:background="@drawable/send_yellow"
                     android:visibility="invisible" />
 
 
@@ -395,7 +411,7 @@
                     android:id="@+id/act_user_img_bar"
                     style="@style/wrapwrap"
                     android:layout_gravity="center"
-                    android:background="@drawable/ic_shop"
+                    android:background="@drawable/shopping_orange"
                     android:visibility="invisible" />
 
                 <ImageButton

@@ -88,7 +88,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
     private EditText edtDoc;
     private TextView txtCasino;
     private TextView txtNumMaquina;
-    private ImageButton btnCloseSession;
+    private ImageButton btnCloseSession, buttonQr;
     private Button btnBorrar;
     private ImageButton btnKeyBoardShow;
     private ImageView imgCasino;
@@ -238,34 +238,35 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
 
     private void obtenerComponentes() {
 
-        lytLogin = (LinearLayout) findViewById(R.id.act_user_lyt_login);
-        lytUser = (RelativeLayout) findViewById(R.id.act_user_lyt_fidel);
-        lytCasino = (RelativeLayout) findViewById(R.id.act_user_lyt_casino);
-        gridNumberPad = (GridLayout) findViewById(R.id.act_user_grid_number);
+        lytLogin = findViewById(R.id.act_user_lyt_login);
+        lytUser =  findViewById(R.id.act_user_lyt_fidel);
+        lytCasino = findViewById(R.id.act_user_lyt_casino);
+        gridNumberPad = findViewById(R.id.act_user_grid_number);
         //componente fidelización
-        txtNombre = (TextView) findViewById(R.id.act_user_txt_name);
-        txtPuntos = (TextView) findViewById(R.id.act_user_txt_points);
-        txtPuntosRedim = (TextView) findViewById(R.id.act_user_txt_points_redeemed);
-        btnCloseSession = (ImageButton) findViewById(R.id.act_user_btn_close_session);
-        txtNumMaquina=(TextView) findViewById(R.id.act_num_maquina);
+        txtNombre = findViewById(R.id.act_user_txt_name);
+        txtPuntos = findViewById(R.id.act_user_txt_points);
+        txtPuntosRedim = findViewById(R.id.act_user_txt_points_redeemed);
+        btnCloseSession = findViewById(R.id.act_user_btn_close_session);
+        txtNumMaquina= findViewById(R.id.act_num_maquina);
+        buttonQr = findViewById(R.id.button_qr);
 
         //componente casino
-        txtCasino = (TextView) findViewById(R.id.act_user_txt_casino);
-        imgCasino = (ImageView) findViewById(R.id.act_user_img_casino);
+        txtCasino = findViewById(R.id.act_user_txt_casino);
+        imgCasino = findViewById(R.id.act_user_img_casino);
 
         //componentes asistencia
-        btnBar = (ImageButton) findViewById(R.id.act_user_btn_bar);
-        btnCashless =(ImageButton) findViewById(R.id.act_user_btn_cashless);
-        //btnCallService = (ImageButton) findViewById(R.id.act_user_btn_service);
-        btnMenu = (ImageButton) findViewById(R.id.act_user_btn_menu);
-        btnKeyBoardShow = (ImageButton) findViewById(R.id.act_user_btn_keyboard);
+        btnBar = findViewById(R.id.act_user_btn_bar);
+        btnCashless = findViewById(R.id.act_user_btn_cashless);
+        //btnCallService = findViewById(R.id.act_user_btn_service);
+        btnMenu = findViewById(R.id.act_user_btn_menu);
+        btnKeyBoardShow = findViewById(R.id.act_user_btn_keyboard);
 
-        imgBar = (ImageView) findViewById(R.id.act_user_img_bar);
-        imgCallService = (ImageView) findViewById(R.id.act_user_img_service);
+        imgBar = findViewById(R.id.act_user_img_bar);
+        imgCallService = findViewById(R.id.act_user_img_service);
 
         //componentes login
-        edtDoc = (EditText) findViewById(R.id.act_user_txt_doc);
-        btnBorrar = (Button) findViewById(R.id.act_user_btn_clear);
+        edtDoc = findViewById(R.id.act_user_txt_doc);
+        btnBorrar = findViewById(R.id.act_user_btn_clear);
         edtDoc.setCustomSelectionActionModeCallback(new android.view.ActionMode.Callback() {
             @Override
             public boolean onCreateActionMode(android.view.ActionMode actionMode, Menu menu) {
@@ -735,6 +736,12 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
 
     }
 
+    public void onClickQR(View view){
+
+    }
+
+    //______________________________________________________________________________________
+
     private void setTextPoints(String puntosDisp, String puntosRedim) {
         txtPuntos.setText(puntosDisp);
         txtPuntosRedim.setText(puntosRedim);
@@ -804,7 +811,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
                     getString(R.string.act_user_only_bar, preferences.getString(AppConstants.Prefs.NOM_CASINO, "")));
             imgCasino.setVisibility(GONE);
         }
-        btnMenu.setImageResource(R.drawable.ic_settings_white_36dp);
+        btnMenu.setImageResource(R.drawable.settings_white);
 
     }
 

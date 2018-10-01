@@ -149,8 +149,8 @@ public class AdapterListBarItems extends RecyclerView.Adapter<AdapterListBarItem
 
                 viewHolderBar.imgOrderState.setBackgroundResource(
                         barItem.getOrderState().getState().equals(AppConstants.OrderState.ON_WAY) ?
-                                R.drawable.ic_on_way_46dp:
-                                R.drawable.ic_on_hold_46dp);
+                                R.drawable.update_orange:
+                                R.drawable.bell_ring_yellow);
                 viewHolderBar.txtOrderState.setText(barItem.getOrderState().getState().equals(AppConstants.OrderState.ON_WAY) ?
                         R.string.common_on_way:
                         R.string.common_on_hold);

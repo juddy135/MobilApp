@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/selector_square_2"
         android:onClick="onClickBack"
-        android:src="@drawable/ic_arrow_back_white_36dp" />
+        android:src="@drawable/arrow_left_white" />
     <!-- Boton de Cerrar Sesion-->
     <ImageButton
         android:id="@+id/act_user_btn_logout"
@@ -119,7 +119,7 @@
                 <ImageButton
                     style="@style/wrapwrap"
                     android:layout_below="@+id/act_user_txt_billetero_redeemed"
-                    android:src="@drawable/ic_actualizar_26dp"
+                    android:src="@drawable/sync_black_small"
                     android:background="@drawable/selector_square"
                     android:layout_marginStart="10dp"
                     android:onClick="onClickActualizarBilletero"
@@ -161,7 +161,7 @@
                         android:id="@+id/act_user_img_service"
                         style="@style/wrapwrap"
                         android:layout_gravity="center"
-                        android:background="@drawable/ic_call"
+                        android:background="@drawable/send_yellow"
                         android:visibility="invisible" />
 
                 </GridLayout>

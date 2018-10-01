@@ -76,7 +76,6 @@ public class AsyncTaskStateCallService extends AsyncTask<String, Void, String[]>
                 while ((line = rd.readLine()) != null) {
                     response.append(line);
                 }
-                Log.i(":::STATE_CALL:::",response.toString());
                 JSONObject jsonObjectB = new JSONObject(response.toString());
                 JSONObject jsonObject = jsonObjectB.getJSONObject(AppConstants.WebParams.STATUS);
 
