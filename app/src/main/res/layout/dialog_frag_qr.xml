@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/wrapwrap"
+    android:layout_width="@dimen/dialog_width"
+    android:background="@drawable/shape_background_dialog"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+
+    <TextView
+        android:id="@+id/dialog_frag_text_qr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_margin_big"
+        android:layout_marginEnd="@dimen/common_margin_big"
+        android:textSize="@dimen/common_textsize_bigger"
+        android:textColor="@android:color/white"
+        android:text="Barcode"
+        android:gravity="center"
+        />
+
+
+    <ImageView
+        android:id="@+id/dialog_frag_image_qr"
+        android:layout_marginTop="@dimen/common_margin_bigger"
+        android:layout_marginBottom="@dimen/common_margin_bigger"
+        android:layout_marginStart="@dimen/common_margin_big"
+        android:layout_marginEnd="@dimen/common_margin_big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/qrcode_scan"
+        />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/holo_blue_light"
+        />
+
+    <Button
+        android:id="@+id/dialog_frag_simple_btn_ok_qr"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@android:color/transparent"
+        android:padding="@dimen/common_padding_medium"
+        android:text="@string/common_accept"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/common_textsize_medium"
+        />
+</LinearLayout>

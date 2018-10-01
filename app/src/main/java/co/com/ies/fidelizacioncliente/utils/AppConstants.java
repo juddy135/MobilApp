@@ -22,7 +22,6 @@ public class AppConstants {
     public final static int INTERV_UPDATE_CALL = 2000;//mili segundos
     public final static int DEF_INTERV_UPDATE_CALL = 15000;//mili segundos
 
-
     /**
      * Nombres de las keys de las preferencias
      */

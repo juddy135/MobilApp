@@ -44,6 +44,7 @@ import co.com.ies.fidelizacioncliente.base.ActivityBase;
 import co.com.ies.fidelizacioncliente.custom.keyboard.LetterNumberKeyboard;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragClave;
 import co.com.ies.fidelizacioncliente.dialog.DialogFragConfirm;
+import co.com.ies.fidelizacioncliente.dialog.DialogFragQR;
 import co.com.ies.fidelizacioncliente.entity.EstadoSolicitudEnum;
 import co.com.ies.fidelizacioncliente.manager.ManagerStandard;
 import co.com.ies.fidelizacioncliente.utils.AppConstants;
@@ -63,7 +64,7 @@ import static android.view.View.GONE;
  * Soliciar atención al cliente
  * Mostrar logo del casino en caso de solo ser usado para bar
  */
-public class ActivityUser extends ActivityBase implements DialogFragConfirm.NoticeDialogActionsListener, DialogFragClave.ClaveDinamicaDialogActionsListener {
+public class ActivityUser extends ActivityBase implements DialogFragConfirm.NoticeDialogActionsListener, DialogFragClave.ClaveDinamicaDialogActionsListener, DialogFragQR.ActionsListener {
 
     private final static int ACTION_GET_ITEM = 1;
     private final static int ACTION_CASHLESS = 2;
@@ -116,6 +117,7 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
     private String enableBilletero;
     private String valorBilletero;
     private String idsolicitud="";
+    private String idCliente="";
 
     private TimerTask taskPoints;
     private TimerTask taskVideo;
@@ -738,6 +740,14 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
 
     public void onClickQR(View view){
 
+        DialogFragment newFragment = new DialogFragQR();
+        Bundle args = new Bundle();
+        args.putString(DialogFragQR.ID_CLIENTE_DIALOG, idCliente);
+
+        newFragment.setArguments(args);
+        newFragment.show(getSupportFragmentManager(), "dialogqr");
+
+
     }
 
     //______________________________________________________________________________________
@@ -914,12 +924,13 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
         url = preferences.getString(AppConstants.Prefs.URL, "");
         casinoCode = preferences.getString(AppConstants.Prefs.ID_CASINO, "");
         serial = preferences.getString(AppConstants.Prefs.SERIAL, "");
+        idCliente=FidelizacionApplication.getInstance().getUserDoc();
         taskPoints = new TimerTask() {
             @Override
             public void run() {
                 if (WebUtils.isOnline(ActivityUser.this)) {
                     asyncTaskUserPoints = (AsyncTaskUserPoints) new AsyncTaskUserPoints(responseUserPoints).
-                            execute(url, FidelizacionApplication.getInstance().getUserDoc(), casinoCode, serial);
+                            execute(url, idCliente, casinoCode, serial);
                 }
             }
         };
@@ -1030,6 +1041,11 @@ public class ActivityUser extends ActivityBase implements DialogFragConfirm.Noti
         ALLOW_VIDEO = true;
     }
 
+
+    @Override
+    public void onDialogQrConfirm(DialogFragment dialogFragment){
+
+    }
 
     /*__________CLAVE DINAMICA___________________*/
     @Override
